@@ -9,25 +9,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <header class="main-header">
         <nav class="nav-container">
             <div class="logo">
-                <h1>LearnPac</h1>
+                <img src="./assets/images/lplogo.png" alt="" style="width: 150px;">
             </div>
             <div class="nav-links">
                 <a href="#about">About Us</a>
                 <a href="#services">Services</a>
                 <a href="#courses">Courses</a>
                 <a href="#contact">Contact</a>
-                <button class="login-btn">Login</button>
+                <a class="login-btn" href="https://app.learnpac.co.uk/log-in/">Login</a>
                 <button class="cta-btn">Get Started</button>
+                <div class="cart-container">
+                    <button class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
             </div>
         </nav>
     </header>
     <main>
         <section class="hero">
+            <div class="hero-background"></div>
             <div class="hero-content">
                 <h1>CPD-Accredited Online Training</h1>
                 <h2>Empowering your people. Simplifying compliance. Building confidence.</h2>
@@ -146,5 +154,31 @@
             <p>&copy; 2024 LearnPac Systems. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartBtn = document.querySelector('.cart-btn');
+            const cartCount = document.querySelector('.cart-count');
+            let count = 0;
+
+            // Example function to update cart count
+            function updateCartCount(newCount) {
+                count = newCount;
+                cartCount.textContent = count;
+                cartBtn.classList.add('item-added');
+                setTimeout(() => {
+                    cartBtn.classList.remove('item-added');
+                }, 300);
+            }
+
+            // Example: Update cart when "Browse Courses" is clicked
+            document.querySelectorAll('.cta-btn').forEach(btn => {
+                if(btn.textContent.includes('Browse Courses')) {
+                    btn.addEventListener('click', () => {
+                        updateCartCount(count + 1);
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
