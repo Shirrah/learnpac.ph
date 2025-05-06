@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LearnPac: CPD-Accredited Online Training</title>
+  <title>LearnPac: New Web Design</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -24,8 +24,24 @@
         <li class="nav-item"><a class="nav-link" href="./html/Services.php" target="_blank">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-        <li class="nav-item"><a class="btn btn-outline-primary me-2" href="https://app.learnpac.co.uk/log-in/" target="_blank"  >Login</a></li>
-        <li class="nav-item"><button class="btn btn-success me-2 cta-btn">Get Started</button></li>
+        <li class="nav-item">
+          <form class="d-flex align-items-center position-relative" id="navbar-search-form" autocomplete="off" style="margin-right: 8px;">
+            <input
+              type="text"
+              class="form-control search-input"
+              placeholder="Search courses..."
+              aria-label="Search"
+              id="search-input"
+              style="width: 0; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); padding-right: 32px; overflow: hidden; border-radius: 20px;"
+              onfocus="this.style.width='200px';"
+              onblur="if(this.value===''){this.style.width='0';}"
+            />
+            <button type="submit" class="btn btn-link position-absolute end-0 top-50 translate-middle-y px-2" style="color: #198754;">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </li>
+        <li class="nav-item"><a class="btn btn-outline-primary me-2" href="https://app.learnpac.co.uk/log-in/" target="_blank" >Login</a></li>
         <li class="nav-item position-relative">
           <button class="btn btn-link position-relative cart-btn">
             <i class="fas fa-shopping-cart"></i>
@@ -37,18 +53,33 @@
   </div>
 </nav>
 
+
 <!-- Hero Section -->
-<section class="hero d-flex">
-  <div class="container hero-content">
-    <h1 class="display-4 fw-bold">CPD-Accredited Online Training</h1>
-    <h2 class="h4 mb-3">Empowering your people. Simplifying compliance. Building confidence.</h2>
-    <p class="lead mb-4">The UK's trusted leader in providing accredited online training courses, digital learning programmes, and professional qualifications.</p>
-    <div>
-      <button class="btn btn-success me-3 cta-btn">Browse Courses</button>
-      <button class="btn btn-outline-light secondary-btn">Book a Demo</button>
+<section class="hero d-flex align-items-center">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Left Column (Text) -->
+      <div class="col-md-6 text-white hero-content text-md-start text-center">
+        <h1 class="display-4 fw-bold">CPD-Accredited Online Training</h1>
+        <h2 class="h4 mb-3">Empowering your people. Simplifying compliance. Building confidence.</h2>
+        <p class="lead mb-4">The UK's trusted leader in providing accredited online training courses, digital learning programmes, and professional qualifications.</p>
+        <div>
+          <button class="simple-light-btn me-3">Browse Courses</button>
+          <button class="simple-light-outline-btn">Book a Demo</button>
+          
+          
+          
+        </div>
+      </div>
+
+      <!-- Right Column (Image Placeholder) -->
+      <div class="col-md-6 text-center">
+        <img src="assets/images/output-onlinegiftools (2).gif" alt="Healthcare Image" class="img-fluid rounded ">
+      </div>
     </div>
   </div>
 </section>
+
 
 <!-- Features -->
 <section class="py-5 bg-light">
@@ -84,59 +115,84 @@
 
 
 <!-- Footer -->
-<footer class="bg-dark text-white py-5">
+<footer class="footer-dark py-5">
   <div class="container">
-    <div class="row text-start">
-      <div class="col-md-4 mb-4">
-        <img src="./assets/images/lplogo.png" alt="" style="width: 125px;" class="mb-2">
-        <p>Empowering organisations through robust, high-quality online learning.</p>
+    <div class="row justify-content-between align-items-center mb-4">
+      <div class="col-md-6">
+        <h2 class="fw-bold">Let’s Connect with us</h2>
       </div>
-      <div class="col-md-4 mb-4">
-        <h5>Quick Links</h5>
-        <ul class="list-unstyled">
-          <li><a href="#about" class="text-white text-decoration-none">About Us</a></li>
-          <li><a href="#services" class="text-white text-decoration-none">Services</a></li>
-          <li><a href="#courses" class="text-white text-decoration-none">Courses</a></li>
-          <li><a href="#contact" class="text-white text-decoration-none">Contact</a></li>
-        </ul>
-      </div>
-      <div class="col-md-4 mb-4">
-        <h5>Contact</h5>
-        <p><i class="fas fa-envelope me-2"></i>support@learnpac.co.uk</p>
-        <p><i class="fas fa-globe me-2"></i>www.learnpac.co.uk</p>
+      <div class="col-md-6 text-md-end mt-3 mt-md-0">
+        <a href="#" class="btn btn-brand me-2">Get Started</a>
+        <a href="#" class="btn btn-outline-light">Contact Us</a>
       </div>
     </div>
-    <div class="text-center mt-4 border-top pt-3">
-      &copy; 2024 LearnPac Systems. All rights reserved.
+
+    <div class="row g-4">
+      <div class="col-md-3">
+        <h5 class="fw-semibold">Lorem Ipsum</h5>
+        <p class="mb-2">Subscribe our newsletter for update</p>
+        <form class="d-flex newsletter-form">
+          <input type="email" class="form-control" placeholder="Enter your email address" />
+          <button class="btn btn-brand ms-2">Book a Demo</button>
+        </form>
+      </div>
+      <div class="col-md-2">
+        <h6>Lorem Ipsum</h6>
+        <ul class="list-unstyled">
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h6>Lorem Ipsum</h6>
+        <ul class="list-unstyled">
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h6>Lorem Ipsum</h6>
+        <ul class="list-unstyled">
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h6>Lorem Ipsum</h6>
+        <ul class="list-unstyled">
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+          <li>Lorem Ipsum</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-5 border-top pt-3">
+      <span>&copy; LearnPac 2025. Privacy | Terms | Site map</span>
+      <div class="social-icons d-flex gap-3">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
     </div>
   </div>
 </footer>
 
-<!-- Scripts -->
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const cartBtn = document.querySelector('.cart-btn');
-    const cartCount = document.querySelector('.cart-count');
-    let count = 0;
-
-    function updateCartCount(newCount) {
-      count = newCount;
-      cartCount.textContent = count;
-      cartBtn.classList.add('item-added');
-      setTimeout(() => {
-        cartBtn.classList.remove('item-added');
-      }, 300);
-    }
-
-    document.querySelectorAll('.cta-btn').forEach(btn => {
-      if (btn.textContent.includes('Browse Courses')) {
-        btn.addEventListener('click', () => {
-          updateCartCount(count + 1);
-        });
-      }
-    });
-  });
-</script>
+<script src="script/navbar.js"></script>
 </body>
 </html>

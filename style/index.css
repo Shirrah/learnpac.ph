@@ -1,6 +1,6 @@
 .nav-link:hover{
-    padding-bottom: 0;
-    border-bottom: solid 3px #00AF52;
+  padding-bottom: 0;
+  border-bottom: solid 3px #00AF52;
 }
 
 body { font-family: 'Inter', sans-serif; }
@@ -8,30 +8,148 @@ body { font-family: 'Inter', sans-serif; }
   background: url('https://codexeducation.in/codexlearning/pluginfile.php/20615/course/overviewfiles/n.gif') center/cover no-repeat;
   position: relative;
   min-height: 80vh;
-  display: flex;
-  align-items: center;
   color: white;
+  padding: 60px 0;
 }
+
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, rgba(0, 175, 82, 0.9), rgba(7, 71, 157, 0.85));
+  z-index: 0;
 }
-.hero-content {
+
+.hero .container {
   position: relative;
   z-index: 1;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
 }
+
+.hero-content {
+  max-width: 100%;
+}
+
 .cart-count {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: #00AF52;
-  color: #fff;
-  font-size: 0.7rem;
-  border-radius: 50%;
-  padding: 0.25em 0.5em;
+position: absolute;
+top: -6px;
+right: -6px;
+background: #00AF52;
+color: #fff;
+font-size: 0.7rem;
+border-radius: 50%;
+padding: 0.25em 0.5em;
+}
+.search-input {
+width: 40px;
+min-width: 40px;
+background: #f8f9fa;
+border-radius: 20px;
+border: 1px solid #ced4da;
+transition: width 0.4s cubic-bezier(0.4,0,0.2,1), background 0.2s;
+cursor: pointer;
+color: #212529;
+font-size: 1rem;
+padding-left: 12px;
+padding-right: 32px;
+outline: none;
+}
+.search-input:focus,
+.search-input.expanded {
+width: 180px;
+background: #fff;
+cursor: text;
+}
+#navbar-search-form .btn-link {
+pointer-events: none;
+}
+#navbar-search-form:focus-within .btn-link {
+pointer-events: auto;
+}
+
+
+.simple-light-btn {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #05284c;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.simple-light-btn:hover {
+  background-color: white;
+  transform: translateY(-1px);
+}
+
+.simple-light-outline-btn {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.simple-light-outline-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e2f8ec;
+}
+
+
+.footer-dark {
+  background: linear-gradient(135deg, #003c2f, #05284c);
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-brand {
+  background: linear-gradient(90deg, #00AF52, #07479D);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 0 #00763a;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-brand:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.btn-outline-light {
+  border: 2px solid #00AF52;
+  color: #00AF52;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-light:hover {
+  background-color: #00AF52;
+  color: white;
+}
+
+.newsletter-form input {
+  flex: 1;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+}
+
+.newsletter-form button {
+  white-space: nowrap;
+}
+
+.social-icons a i {
+  font-size: 1.2rem;
+  color: #00AF52;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover i {
+  color: white;
 }
