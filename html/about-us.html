@@ -12,15 +12,7 @@
 </head>
 <body>
 
-  <div id="header"></div>
-  <script>
-    fetch("../html/header.html")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("header").innerHTML = data;
-      });
-  </script>
-  
+
 <!-- About Hero Section -->
 <section class="about-hero d-flex align-items-center">
   <div class="container">
@@ -184,14 +176,5 @@
     </div>
   </div>
 </section>
-<div id="footer"></div>
-
-<script>
-  fetch("../html/footer.html")
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById("footer").innerHTML = data;
-    });
-</script>
 </body>
 </html> 
