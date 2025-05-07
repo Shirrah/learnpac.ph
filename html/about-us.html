@@ -1,131 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | System Name</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, rgba(0, 175, 82, 0.9), rgba(7, 71, 157, 0.85));
-            color: white;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        header {
-            text-align: center;
-            padding: 2rem 0;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .about-content {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 1rem 0;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            padding: 1.5rem;
-            flex: 1 1 300px;
-            transition: transform 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-card h3 {
-            margin-top: 0;
-            color: #fff;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 2rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: white;
-            color: rgba(7, 71, 157, 0.85);
-            padding: 0.7rem 1.5rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.8);
-            transform: scale(1.05);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - LearnPac Online Training Services</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/x-icon" href="../assets/images/lplogo.png">
+  <link rel="stylesheet" href="../style/index.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>About Us</h1>
-            <p>Empowering innovation with cutting-edge technology.</p>
-        </header>
-        
-        <div class="about-content">
-            <h2>Who We Are</h2>
-            <p>
-                Our system is designed to provide seamless, efficient, and secure solutions for businesses and individuals. 
-                Built with the latest advancements, we ensure reliability, scalability, and user-friendly experiences.
-            </p>
-            
-            <h2>Our Mission</h2>
-            <p>
-                We strive to simplify complex processes through intelligent automation, robust architecture, and a commitment 
-                to excellence. Our goal is to help you achieve more with less effort.
-            </p>
-            
-            <div class="features">
-                <div class="feature-card">
-                    <h3>Secure & Reliable</h3>
-                    <p>Advanced encryption and security protocols to keep your data safe.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>User-Friendly</h3>
-                    <p>Intuitive design that makes navigation effortless.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Scalable Solutions</h3>
-                    <p>Grow with us—our system adapts to your needs.</p>
-                </div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>Ready to get started?</p>
-            <a href="#" class="btn">Contact Us</a>
-        </footer>
+
+  <div id="header"></div>
+  <script>
+    fetch("../html/header.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("header").innerHTML = data;
+      });
+  </script>
+  
+<!-- About Hero Section -->
+<section class="about-hero d-flex align-items-center">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 text-white">
+        <h1 class="display-4 fw-bold mb-4">About LearnPac</h1>
+        <p class="lead mb-4">Empowering healthcare professionals through innovative online training solutions since 2010.</p>
+        <p class="h5 mb-4">We're on a mission to transform healthcare education and improve patient care through accessible, high-quality training.</p>
+      </div>
+      <div class="col-lg-6">
+        <img src="https://placehold.co/600x400?text=Hello+World" alt="LearnPac Team" class="img-fluid rounded shadow">
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- Our Story Section -->
+<section class="our-story py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2 class="display-6 fw-bold mb-4">Our Story</h2>
+        <p class="lead text-muted mb-4">LearnPac was founded with a simple yet powerful vision: to make quality healthcare training accessible to everyone.</p>
+        <p class="mb-4">What started as a small team of healthcare educators has grown into a leading provider of online healthcare training solutions. Over the years, we've helped millions of healthcare professionals enhance their skills and advance their careers.</p>
+        <p>Today, we continue to innovate and expand our course offerings while maintaining our commitment to excellence and accessibility in healthcare education.</p>
+      </div>
+      <div class="col-lg-6">
+        <div class="row g-4">
+          <div class="col-6">
+            <div class="stat-card text-center p-4 bg-light rounded">
+              <h3 class="display-4 fw-bold text-primary">3M+</h3>
+              <p class="text-muted mb-0">Learners Worldwide</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-card text-center p-4 bg-light rounded">
+              <h3 class="display-4 fw-bold text-primary">500+</h3>
+              <p class="text-muted mb-0">Courses Available</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-card text-center p-4 bg-light rounded">
+              <h3 class="display-4 fw-bold text-primary">98%</h3>
+              <p class="text-muted mb-0">Satisfaction Rate</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-card text-center p-4 bg-light rounded">
+              <h3 class="display-4 fw-bold text-primary">24/7</h3>
+              <p class="text-muted mb-0">Support Available</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Values Section -->
+<section class="our-values py-5 bg-light">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="display-6 fw-bold">Our Values</h2>
+        <p class="lead text-muted">The principles that guide everything we do</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="value-card text-center p-4">
+          <div class="value-icon mb-3">
+            <i class="fas fa-graduation-cap fa-3x text-primary"></i>
+          </div>
+          <h4>Excellence in Education</h4>
+          <p class="text-muted">We are committed to providing the highest quality training and educational resources.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="value-card text-center p-4">
+          <div class="value-icon mb-3">
+            <i class="fas fa-heart fa-3x text-primary"></i>
+          </div>
+          <h4>Patient-Centered Care</h4>
+          <p class="text-muted">Our training programs focus on improving patient outcomes and quality of care.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="value-card text-center p-4">
+          <div class="value-icon mb-3">
+            <i class="fas fa-lightbulb fa-3x text-primary"></i>
+          </div>
+          <h4>Innovation</h4>
+          <p class="text-muted">We continuously evolve our platform and content to meet changing healthcare needs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Leadership Team Section -->
+<section class="leadership-team py-5">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="display-6 fw-bold">Our Leadership Team</h2>
+        <p class="lead text-muted">Meet the people behind LearnPac's success</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="team-card text-center">
+          <img src="https://placehold.co/400x400" alt="John Smith" class="rounded-circle mb-3" width="200" height="200">
+          <h4>John Smith</h4>
+          <p class="text-muted mb-2">Chief Executive Officer</p>
+          <p class="mb-3">20+ years of experience in healthcare education and technology.</p>
+          <div class="social-links">
+            <a href="#" class="text-muted me-2"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-muted"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="team-card text-center">
+          <img src="https://placehold.co/400x400" alt="Sarah Johnson" class="rounded-circle mb-3" width="200" height="200">
+          <h4>Sarah Johnson</h4>
+          <p class="text-muted mb-2">Chief Education Officer</p>
+          <p class="mb-3">Former healthcare educator with a passion for innovative learning solutions.</p>
+          <div class="social-links">
+            <a href="#" class="text-muted me-2"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-muted"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="team-card text-center">
+          <img src="https://placehold.co/400x400" alt="Michael Chen" class="rounded-circle mb-3" width="200" height="200">
+          <h4>Michael Chen</h4>
+          <p class="text-muted mb-2">Chief Technology Officer</p>
+          <p class="mb-3">Expert in educational technology and digital learning platforms.</p>
+          <div class="social-links">
+            <a href="#" class="text-muted me-2"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-muted"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta py-5 bg-primary text-white">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8 text-center text-lg-start">
+        <h2 class="display-6 fw-bold mb-3">Join Our Mission</h2>
+        <p class="lead mb-0">Be part of the future of healthcare education with LearnPac.</p>
+      </div>
+      <div class="col-lg-4 text-center text-lg-end mt-4 mt-lg-0">
+        <a href="#" class="btn btn-light btn-lg">Get Started Today</a>
+      </div>
+    </div>
+  </div>
+</section>
+<div id="footer"></div>
+
+<script>
+  fetch("../html/footer.html")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("footer").innerHTML = data;
+    });
+</script>
 </body>
-</html>
+</html> 

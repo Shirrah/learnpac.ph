@@ -12,37 +12,34 @@
 </head>
 <body>
 
+
 <!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="#"><img src="./assets/images/lplogo.png" alt="Logo" style="width: 150px;"></a>
+    <a class="navbar-brand" href="#">
+      <img src="./assets/images/lplogo.png" alt="Logo" width="150">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mainNav">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-        <li class="nav-item"><a class="nav-link" href="./html/about-us.html" target="_blank">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="./html/Services.php" target="_blank">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="?content=Home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="?content=About	">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="./html/Services.php">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         <li class="nav-item">
-          <form class="d-flex align-items-center position-relative" id="navbar-search-form" autocomplete="off" style="margin-right: 8px;">
-            <input
-              type="text"
-              class="form-control search-input"
-              placeholder="Search courses..."
-              aria-label="Search"
-              id="search-input"
-              style="width: 0; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); padding-right: 32px; overflow: hidden; border-radius: 20px;"
-              onfocus="this.style.width='200px';"
-              onblur="if(this.value===''){this.style.width='0';}"
-            />
-            <button type="submit" class="btn btn-link position-absolute end-0 top-50 translate-middle-y px-2" style="color: #198754;">
+          <form class="d-flex align-items-center position-relative" id="navbar-search-form" autocomplete="off">
+            <input type="text" class="form-control search-input" placeholder="Search courses..." aria-label="Search" id="search-input">
+            <button type="submit" class="btn btn-link position-absolute end-0 top-50 translate-middle-y px-2 text-success">
               <i class="fas fa-search"></i>
             </button>
           </form>
         </li>
-        <li class="nav-item"><a class="btn btn-outline-primary me-2" href="https://app.learnpac.co.uk/log-in/" target="_blank" >Login</a></li>
+        <li class="nav-item">
+          <a class="btn btn-outline-primary me-2" href="https://app.learnpac.co.uk/log-in/" target="_blank">Login</a>
+        </li>
         <li class="nav-item position-relative">
           <button class="btn btn-link position-relative cart-btn">
             <i class="fas fa-shopping-cart"></i>
@@ -55,113 +52,117 @@
 </nav>
 
 
-<!-- Hero Section -->
-<section class="hero d-flex align-items-center">
-  <div class="container">
-    <div class="row align-items-center">
-      <!-- Left Column (Text) -->
-      <div class="col-md-6 text-white hero-content text-md-start text-center">
-        <h1 class="display-4 fw-bold">CPD-Accredited Online Training</h1>
-        <h2 class="h4 mb-3">Empowering your people. Simplifying compliance. Building confidence.</h2>
-        <p class="lead mb-4">The UK's trusted leader in providing accredited online training courses, digital learning programmes, and professional qualifications.</p>
-        <div>
-          <button class="simple-light-btn me-3">Browse Courses</button>
-          <button class="simple-light-outline-btn">Book a Demo</button>
-          
-          
-          
-        </div>
-      </div>
 
-      <!-- Right Column (Image Placeholder) -->
-      <div class="col-md-6 text-center">
-        <img src="assets/images/output-onlinegiftools (2).gif" alt="Healthcare Image" class="img-fluid rounded ">
-      </div>
-    </div>
-  </div>
-</section>
+<div id="main">Loading...</div>
+
+<script>
+  const content = new URLSearchParams(window.location.search).get("content") || "Home";
+
+  switch (content) {
+    case "Home":
+      fetch("./html/home.html")
+        .then(res => res.ok ? res.text() : Promise.reject("Page not found"))
+        .then(html => document.getElementById("main").innerHTML = html)
+        .catch(err => document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>");
+      break;
+
+    case "About":
+      fetch("./html/about-us.html")
+        .then(res => res.ok ? res.text() : Promise.reject("Page not found"))
+        .then(html => document.getElementById("main").innerHTML = html)
+        .catch(err => document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>");
+      break;
+
+    case "Contact":
+      fetch("pages/contact.html")
+        .then(res => res.ok ? res.text() : Promise.reject("Page not found"))
+        .then(html => document.getElementById("main").innerHTML = html)
+        .catch(err => document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>");
+      break;
+
+    default:
+      document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>";
+  }
+</script>
 
 
 
 <!-- Footer -->
 <footer class="footer-dark py-5">
   <div class="container">
-    <div class="row justify-content-between align-items-center mb-4">
+    <div class="row justify-content-between align-items-center mb-5">
       <div class="col-md-6">
-        <h2 class="fw-bold">Let’s Connect with us</h2>
+        <h2 class="fw-bold text-white">Ready to Transform Your Learning Experience?</h2>
+        <p class="text-white-50">Join thousands of organizations already using LearnPac</p>
       </div>
       <div class="col-md-6 text-md-end mt-3 mt-md-0">
         <a href="#" class="btn btn-brand me-2">Get Started</a>
-        <a href="#" class="btn btn-outline-light">Contact Us</a>
+        <a href="#" class="btn btn-outline-light">Contact Sales</a>
       </div>
     </div>
 
     <div class="row g-4">
-      <div class="col-md-3">
-        <h5 class="fw-semibold">Lorem Ipsum</h5>
-        <p class="mb-2">Subscribe our newsletter for update</p>
+      <div class="col-lg-4 col-md-6">
+        <img src="./assets/images/lplogo.png" alt="LearnPac Logo" class="mb-3" width="150">
+        <p class="text-white-50 mb-3">Empowering organizations with accredited online training solutions and professional qualifications.</p>
+        <div class="social-icons d-flex gap-3 mb-3">
+          <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-white"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+        </div>
         <form class="d-flex newsletter-form">
-          <input type="email" class="form-control" placeholder="Enter your email address" />
-          <button class="btn btn-brand ms-2">Book a Demo</button>
+          <input type="email" class="form-control" placeholder="Enter your email">
+          <button class="btn btn-brand ms-2">Subscribe</button>
         </form>
       </div>
-      <div class="col-md-2">
-        <h6>Lorem Ipsum</h6>
-        <ul class="list-unstyled">
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
+      <div class="col-lg-2 col-md-6">
+        <h6 class="text-white mb-3">Company</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="./html/about-us.html">About Us</a></li>
+          <li><a href="./html/Services.php">Services</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
-      <div class="col-md-2">
-        <h6>Lorem Ipsum</h6>
-        <ul class="list-unstyled">
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
+      <div class="col-lg-2 col-md-6">
+        <h6 class="text-white mb-3">Resources</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Support</a></li>
         </ul>
       </div>
-      <div class="col-md-2">
-        <h6>Lorem Ipsum</h6>
-        <ul class="list-unstyled">
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
+      <div class="col-lg-2 col-md-6">
+        <h6 class="text-white mb-3">Legal</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Accessibility</a></li>
         </ul>
       </div>
-      <div class="col-md-2">
-        <h6>Lorem Ipsum</h6>
-        <ul class="list-unstyled">
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
-          <li>Lorem Ipsum</li>
+      <div class="col-lg-2 col-md-6">
+        <h6 class="text-white mb-3">Contact</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="tel:+44123456789">+44 123 456 789</a></li>
+          <li><a href="mailto:info@learnpac.co.uk">test@learnpac.co.uk</a></li>
+          <li class="text-white-50">123 Business Street<br>London, UK<br>SW1A 1AA</li>
         </ul>
       </div>
     </div>
 
-    <div class="d-flex justify-content-between align-items-center mt-5 border-top pt-3">
-      <span>&copy; LearnPac 2025. Privacy | Terms | Site map</span>
-      <div class="social-icons d-flex gap-3">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-x-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    <div class="d-flex justify-content-between align-items-center mt-5 border-top border-secondary pt-4">
+      <div class="text-white-50">
+        &copy; 2024 LearnPac. All rights reserved.
+      </div>
+      <div class="d-flex gap-3">
+        <a href="#" class="text-white-50 text-decoration-none">Privacy</a>
+        <a href="#" class="text-white-50 text-decoration-none">Terms</a>
       </div>
     </div>
   </div>
 </footer>
 
-
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script/navbar.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>
