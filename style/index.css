@@ -1,7 +1,29 @@
 /* ===== HEADER/NAVIGATION STYLES ===== */
-.nav-link:hover{
-  padding-bottom: 0;
-  border-bottom: solid 3px #00AF52;
+.nav-link {
+  color: #333;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #0d6efd;
+}
+
+.nav-link.active {
+  color: #0d6efd;
+  font-weight: 600;
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background-color: #0d6efd;
 }
 
 body { font-family: 'Inter', sans-serif; }

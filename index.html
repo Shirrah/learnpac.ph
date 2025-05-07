@@ -28,7 +28,7 @@
         <li class="nav-item"><a class="nav-link" href="?content=About">About Us</a></li>
         <li class="nav-item"><a class="nav-link" href="?content=Services">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="?content=Courses">Courses</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="?content=Contacts">Contact</a></li>
         <li class="nav-item">
           <form class="d-flex align-items-center position-relative" id="navbar-search-form" autocomplete="off">
             <input type="text" class="form-control search-input" placeholder="Search courses..." aria-label="Search" id="search-input">
@@ -62,7 +62,8 @@
       About: "./html/about-us.html",
       Contact: "pages/contact.html",
       Services: "./html/services.html",
-      Courses: "./html/courses.html"
+      Courses: "./html/courses.html",
+      Contacts: "./html/contact.html"
     };
 
     const page = pageMap[content] || null;
@@ -70,7 +71,26 @@
     if (page) {
       fetch(page)
         .then(res => res.ok ? res.text() : Promise.reject("Page not found"))
-        .then(html => document.getElementById("main").innerHTML = html)
+        .then(html => {
+          document.getElementById("main").innerHTML = html;
+          // Initialize courses page if we're on the courses page
+          if (content === 'Courses' && typeof initializeCoursesPage === 'function') {
+            initializeCoursesPage();
+          }
+          
+          // Update active state in navigation
+          document.querySelectorAll('.nav-link').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('?content=')) {
+              const linkContent = new URLSearchParams(href.split('?')[1]).get("content");
+              if (linkContent === content) {
+                link.classList.add('active');
+              } else {
+                link.classList.remove('active');
+              }
+            }
+          });
+        })
         .catch(err => document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>");
     } else {
       document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>";
