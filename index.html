@@ -26,8 +26,8 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
         <li class="nav-item"><a class="nav-link" href="?content=Home">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="?content=About">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="./html/Services.php">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
+        <li class="nav-item"><a class="nav-link" href="?content=Services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="?content=Courses">Courses</a></li>
         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         <li class="nav-item">
           <form class="d-flex align-items-center position-relative" id="navbar-search-form" autocomplete="off">
@@ -60,7 +60,9 @@
     const pageMap = {
       Home: "./html/home.html",
       About: "./html/about-us.html",
-      Contact: "pages/contact.html"
+      Contact: "pages/contact.html",
+      Services: "./html/services.html",
+      Courses: "./html/courses.html"
     };
 
     const page = pageMap[content] || null;
