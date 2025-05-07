@@ -25,7 +25,7 @@
     <div class="collapse navbar-collapse" id="mainNav">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
         <li class="nav-item"><a class="nav-link" href="?content=Home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="?content=About	">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="?content=About">About Us</a></li>
         <li class="nav-item"><a class="nav-link" href="./html/Services.php">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
@@ -52,38 +52,57 @@
 </nav>
 
 
-
 <div id="main">Loading...</div>
 
 <script>
-  const content = new URLSearchParams(window.location.search).get("content") || "Home";
+  // Load content by name
+  function loadContent(content) {
+    const pageMap = {
+      Home: "./html/home.html",
+      About: "./html/about-us.html",
+      Contact: "pages/contact.html"
+    };
 
-  switch (content) {
-    case "Home":
-      fetch("./html/home.html")
+    const page = pageMap[content] || null;
+
+    if (page) {
+      fetch(page)
         .then(res => res.ok ? res.text() : Promise.reject("Page not found"))
         .then(html => document.getElementById("main").innerHTML = html)
         .catch(err => document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>");
-      break;
-
-    case "About":
-      fetch("./html/about-us.html")
-        .then(res => res.ok ? res.text() : Promise.reject("Page not found"))
-        .then(html => document.getElementById("main").innerHTML = html)
-        .catch(err => document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>");
-      break;
-
-    case "Contact":
-      fetch("pages/contact.html")
-        .then(res => res.ok ? res.text() : Promise.reject("Page not found"))
-        .then(html => document.getElementById("main").innerHTML = html)
-        .catch(err => document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>");
-      break;
-
-    default:
+    } else {
       document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>";
+    }
   }
+
+  // Intercept clicks for internal nav
+  document.addEventListener('DOMContentLoaded', () => {
+    // Load content on initial page load
+    const initialContent = new URLSearchParams(window.location.search).get("content") || "Home";
+    loadContent(initialContent);
+
+    // Setup nav link handling
+    document.querySelectorAll('a.nav-link').forEach(link => {
+      link.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href && href.startsWith('?content=')) {
+          e.preventDefault();
+          const content = new URLSearchParams(href.split('?')[1]).get("content");
+          history.pushState({ content }, '', href);
+          loadContent(content);
+        }
+      });
+    });
+  });
+
+  // Handle browser back/forward
+  window.addEventListener('popstate', event => {
+    const content = (event.state && event.state.content) || new URLSearchParams(window.location.search).get("content") || "Home";
+    loadContent(content);
+  });
 </script>
+
+
 
 
 
