@@ -260,11 +260,6 @@
     </div>
     <div class="chat-body" id="chatBody">
       <div class="chat-messages" id="chatMessages">
-        <div class="message bot">
-          <div class="message-content">
-            Hi there! I'm LP, your AI assistant. How can I help you today?
-          </div>
-        </div>
       </div>
       <div class="chat-input">
         <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
@@ -534,59 +529,355 @@
     text-align: center;
   }
 }
+
+/* Chat Widget Styles */
+.chat-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.chat-widget.minimized .chat-expanded {
+  display: none;
+}
+
+.chat-minimized {
+  width: 60px;
+  height: 60px;
+  background: #007bff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+.chat-minimized i {
+  color: white;
+  font-size: 24px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #dc3545;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-expanded {
+  width: 350px;
+  height: 500px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  background: #007bff;
+  color: white;
+  padding: 15px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+.message {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message.user {
+  align-items: flex-end;
+}
+
+.message.bot {
+  align-items: flex-start;
+}
+
+.message-content {
+  max-width: 80%;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.message.user .message-content {
+  background: #007bff;
+  color: white;
+  border-radius: 15px 15px 0 15px;
+}
+
+.message.bot .message-content {
+  background: #f0f2f5;
+  color: #333;
+  border-radius: 15px 15px 15px 0;
+}
+
+.chat-input {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.chat-input input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.15);
+}
+
+.chat-input button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chat-input button:hover {
+  background: #0056b3;
+}
+
+/* Loading animation for bot messages */
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 10px 15px;
+  background: #f0f2f5;
+  border-radius: 15px;
+  width: fit-content;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: #666;
+  border-radius: 50%;
+  animation: typing 1s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
 </style>
 
 <script>
-function toggleChat() {
-  const widget = document.getElementById('chatWidget');
-  widget.classList.toggle('minimized');
-  
-  // Remove notification badge when chat is opened
-  if (!widget.classList.contains('minimized')) {
+// Chat Widget Functionality
+const chatWidget = {
+  isOpen: false,
+  messages: [],
+  typingTimeout: null,
+
+  init() {
+    this.bindEvents();
+    this.loadMessages();
+  },
+
+  bindEvents() {
+    const widget = document.getElementById('chatWidget');
+    const input = document.getElementById('chatInput');
+    const sendButton = document.querySelector('.chat-input button');
+
+    widget.addEventListener('click', (e) => {
+      if (e.target.closest('.chat-minimized')) {
+        this.toggleChat();
+      }
+    });
+
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        this.sendMessage();
+      }
+    });
+
+    sendButton.addEventListener('click', () => {
+      this.sendMessage();
+    });
+  },
+
+  toggleChat() {
+    const widget = document.getElementById('chatWidget');
+    this.isOpen = !this.isOpen;
+    widget.classList.toggle('minimized');
+    
+    if (this.isOpen) {
+      this.hideNotification();
+      this.scrollToBottom();
+    }
+  },
+
+  hideNotification() {
     const badge = document.querySelector('.notification-badge');
     if (badge) {
       badge.style.display = 'none';
     }
-  }
-}
+  },
 
-function handleChatInput(event) {
-  if (event.key === 'Enter') {
-    sendMessage();
-  }
-}
+  showNotification() {
+    const badge = document.querySelector('.notification-badge');
+    if (badge) {
+      badge.style.display = 'flex';
+    }
+  },
 
-function sendMessage() {
-  const input = document.getElementById('chatInput');
-  const message = input.value.trim();
-  
-  if (message) {
-    addMessage(message, 'user');
-    input.value = '';
+  async sendMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
     
-    // Simulate AI response after a short delay
-    setTimeout(() => {
-      const responses = [
-        "Hi! LP here. I'd be happy to help you with our courses.",
-        "As LP, I can guide you through our training programs.",
-        "LP at your service! Let me help you find the perfect course.",
-        "That's a great question! LP here to assist you with that.",
-        "Need help? LP is here to provide all the information you need."
-      ];
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      addMessage(randomResponse, 'bot');
-    }, 1000);
-  }
-}
+    if (message) {
+      // Add user message
+      this.addMessage(message, 'user');
+      input.value = '';
+      
+      // Show typing indicator
+      this.showTypingIndicator();
+      
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Remove typing indicator
+      this.removeTypingIndicator();
+      
+      // Generate and add bot response
+      const response = this.generateResponse(message);
+      this.addMessage(response, 'bot');
+      
+      // Save messages
+      this.saveMessages();
+    }
+  },
 
-function addMessage(text, type) {
-  const messages = document.getElementById('chatMessages');
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `message ${type}`;
-  messageDiv.innerHTML = `<div class="message-content">${text}</div>`;
-  messages.appendChild(messageDiv);
-  messages.scrollTop = messages.scrollHeight;
-}
+  showTypingIndicator() {
+    const messages = document.getElementById('chatMessages');
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message bot';
+    typingDiv.innerHTML = `
+      <div class="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    `;
+    messages.appendChild(typingDiv);
+    this.scrollToBottom();
+  },
+
+  removeTypingIndicator() {
+    const typingIndicator = document.querySelector('.typing-indicator');
+    if (typingIndicator) {
+      typingIndicator.parentElement.remove();
+    }
+  },
+
+  addMessage(text, type) {
+    const messages = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}`;
+    messageDiv.innerHTML = `<div class="message-content">${text}</div>`;
+    messages.appendChild(messageDiv);
+    
+    this.messages.push({ text, type, timestamp: new Date().toISOString() });
+    this.scrollToBottom();
+  },
+
+  scrollToBottom() {
+    const messages = document.getElementById('chatMessages');
+    messages.scrollTop = messages.scrollHeight;
+  },
+
+  generateResponse(message) {
+    // Simple response generation based on keywords
+    const lowerMessage = message.toLowerCase();
+    
+    if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+      return "Hello! I'm LP, your AI assistant. How can I help you with our courses today?";
+    }
+    
+    if (lowerMessage.includes('course') || lowerMessage.includes('training')) {
+      return "We offer a wide range of courses! Would you like to know about our most popular courses or do you have a specific topic in mind?";
+    }
+    
+    if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
+      return "Our course prices vary depending on the program. Would you like me to show you our current course catalog with pricing?";
+    }
+    
+    if (lowerMessage.includes('help')) {
+      return "I'm here to help! You can ask me about our courses, pricing, or how to get started. What would you like to know?";
+    }
+    
+    // Default response
+    return "I understand you're interested in learning more. Could you please provide more details about what you'd like to know? I'm here to help guide you through our training programs.";
+  },
+
+  saveMessages() {
+    localStorage.setItem('chatMessages', JSON.stringify(this.messages));
+  },
+
+  loadMessages() {
+    const savedMessages = localStorage.getItem('chatMessages');
+    if (savedMessages) {
+      this.messages = JSON.parse(savedMessages);
+      this.messages.forEach(msg => {
+        this.addMessage(msg.text, msg.type);
+      });
+    } else {
+      // Add welcome message if no saved messages
+      const welcomeMessage = "Hi there! I'm LP, your AI assistant. How can I help you today?";
+      this.messages = [{ text: welcomeMessage, type: 'bot', timestamp: new Date().toISOString() }];
+      this.addMessage(welcomeMessage, 'bot');
+    }
+  }
+};
+
+// Initialize chat widget when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  chatWidget.init();
+});
 
 // Add cart functionality
 let cart = [];
