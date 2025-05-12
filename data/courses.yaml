@@ -1,0 +1,54 @@
+courses:
+  - id: 1
+    title: Basic Healthcare Training
+    description: Learn the fundamentals of healthcare practice
+    price: 299.99
+    duration: 8 weeks
+    category: Healthcare
+    image: https://placehold.co/400x250?text=Healthcare+Course+1
+    modules:
+      - Introduction to Healthcare
+      - Basic Patient Care
+      - Medical Terminology
+      - Healthcare Ethics
+    features:
+      - Accredited Certification
+      - 24/7 Access
+      - Expert Support
+      - Interactive Learning
+
+  - id: 2
+    title: Mental Health Awareness
+    description: Understand the basics of mental health and wellbeing
+    price: 249.99
+    duration: 6 weeks
+    category: Mental Health
+    image: https://placehold.co/400x250?text=Mental+Health+Course
+    modules:
+      - Understanding Mental Health
+      - Common Mental Health Conditions
+      - Support Strategies
+      - Self-Care Techniques
+    features:
+      - Professional Certification
+      - Flexible Learning
+      - Case Studies
+      - Practical Exercises
+
+  - id: 3
+    title: Social Care Foundations
+    description: An introduction to working in the social care sector
+    price: 199.99
+    duration: 4 weeks
+    category: Social Care
+    image: https://placehold.co/400x250?text=Social+Care+Course
+    modules:
+      - Social Care Principles
+      - Communication Skills
+      - Safeguarding
+      - Person-Centered Care
+    features:
+      - Industry Recognition
+      - Online Resources
+      - Assessment Tools
+      - Career Guidance 

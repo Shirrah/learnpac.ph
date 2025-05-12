@@ -145,118 +145,111 @@
   </div>
 </div>
 
-<script src="../data/courses.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-// Initialize courses page
-function initializeCoursesPage() {
-    displayCourses();
-    setupCartButton();
-}
+let courses = [];
+let cart = [];
 
-function displayCourses() {
-    const container = document.getElementById('coursesContainer');
-    container.innerHTML = '';
-
-    courses.forEach(course => {
-        const courseCard = `
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <img src="${course.image}" class="card-img-top" alt="${course.title}" onerror="this.src='https://placehold.co/400x250?text=${encodeURIComponent(course.title)}'">
-                    <div class="card-body">
-                        <h5 class="card-title">${course.title}</h5>
-                        <p class="card-text">${course.description}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="h5 mb-0">£${course.price}</span>
-                            <button class="btn btn-primary" onclick="openCourseModal(${course.id})">View Details</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        container.innerHTML += courseCard;
-    });
-}
-
-function filterCourses() {
-    const searchTerm = document.getElementById('courseSearch').value.toLowerCase();
-    const category = document.getElementById('categoryFilter').value;
-    
-    const filteredCourses = courses.filter(course => {
-        const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
-                            course.description.toLowerCase().includes(searchTerm);
-        const matchesCategory = !category || course.category === category;
-        return matchesSearch && matchesCategory;
-    });
-
-    const container = document.getElementById('coursesContainer');
-    container.innerHTML = '';
-
-    filteredCourses.forEach(course => {
-        const courseCard = `
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <img src="${course.image}" class="card-img-top" alt="${course.title}" onerror="this.src='https://placehold.co/400x250?text=${encodeURIComponent(course.title)}'">
-                    <div class="card-body">
-                        <h5 class="card-title">${course.title}</h5>
-                        <p class="card-text">${course.description}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="h5 mb-0">£${course.price}</span>
-                            <button class="btn btn-primary" onclick="openCourseModal(${course.id})">View Details</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        container.innerHTML += courseCard;
-    });
-}
-
-let currentCourseId = null;
-
-function openCourseModal(courseId) {
-    currentCourseId = courseId;
-    const course = courses.find(c => c.id === courseId);
-    if (!course) return;
-
-    document.getElementById('courseModalTitle').textContent = course.title;
-    document.getElementById('courseModalImage').src = course.image;
-    document.getElementById('courseModalImage').alt = course.title;
-    document.getElementById('courseModalDescription').textContent = course.description;
-    document.getElementById('courseModalPrice').textContent = course.price.toFixed(2);
-
-    const detailsList = document.getElementById('courseModalDetails');
-    detailsList.innerHTML = `
-        <li>Duration: ${course.duration}</li>
-        <li>Category: ${course.category}</li>
-    `;
-
-    const modal = new bootstrap.Modal(document.getElementById('courseModal'));
-    modal.show();
-}
-
-function setupCartButton() {
-    const cartBtn = document.querySelector('.cart-btn');
-    if (cartBtn) {
-        cartBtn.addEventListener('click', () => {
-            displayCart();
-            const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
-            cartModal.show();
-        });
-    }
-
-    document.getElementById('courseModalAddToCart').addEventListener('click', () => {
-        if (currentCourseId) {
-            addToCart(currentCourseId);
-            const courseModal = bootstrap.Modal.getInstance(document.getElementById('courseModal'));
-            courseModal.hide();
+// Load courses from database
+async function loadCourses(searchTerm = '') {
+    try {
+        const url = searchTerm 
+            ? `../data/search_courses.php?q=${encodeURIComponent(searchTerm)}`
+            : '../data/get_courses.php';
+            
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.success) {
+            courses = data.courses;
+            displayCourses();
+            setupCartButton();
+            loadCart();
+            
+            // Update search input if search term exists
+            if (searchTerm) {
+                document.getElementById('courseSearch').value = searchTerm;
+            }
+        } else {
+            console.error('Error loading courses:', data.error);
         }
-    });
+    } catch (error) {
+        console.error('Error loading courses:', error);
+    }
 }
 
+// Load cart from server
+async function loadCart() {
+    try {
+        const response = await fetch('../data/cart_operations.php?action=get_cart');
+        const data = await response.json();
+        
+        if (data.success) {
+            cart = data.cart;
+            updateCartCount();
+            displayCart();
+        }
+    } catch (error) {
+        console.error('Error loading cart:', error);
+    }
+}
+
+// Add to cart
+async function addToCart(courseId) {
+    try {
+        const response = await fetch('../data/cart_operations.php?action=add_to_cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ courseId })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            await loadCart(); // Reload cart after adding item
+        } else {
+            console.error('Error adding to cart:', data.error);
+        }
+    } catch (error) {
+        console.error('Error adding to cart:', error);
+    }
+}
+
+// Remove from cart
+async function removeFromCart(courseId) {
+    try {
+        const response = await fetch(`../data/cart_operations.php?action=remove_from_cart&courseId=${courseId}`, {
+            method: 'DELETE'
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            await loadCart(); // Reload cart after removing item
+        } else {
+            console.error('Error removing from cart:', data.error);
+        }
+    } catch (error) {
+        console.error('Error removing from cart:', error);
+    }
+}
+
+// Update cart count in navbar
+function updateCartCount() {
+    const cartCount = document.querySelector('.cart-count');
+    if (cartCount) {
+        cartCount.textContent = cart.length;
+    }
+}
+
+// Display cart items
 function displayCart() {
     const cartItems = document.getElementById('cartItems');
     const cartTotal = document.getElementById('cartTotal');
+    
+    if (!cartItems || !cartTotal) return;
     
     if (cart.length === 0) {
         cartItems.innerHTML = '<p class="text-center">Your cart is empty</p>';
@@ -285,6 +278,128 @@ function displayCart() {
     cartTotal.textContent = total.toFixed(2);
 }
 
+// Filter courses
+async function filterCourses() {
+    const searchTerm = document.getElementById('courseSearch').value;
+    const category = document.getElementById('categoryFilter').value;
+    
+    try {
+        const response = await fetch(`../data/search_courses.php?q=${encodeURIComponent(searchTerm)}&category=${encodeURIComponent(category)}`);
+        const data = await response.json();
+        
+        if (data.success) {
+            courses = data.courses;
+            displayCourses();
+        } else {
+            console.error('Error filtering courses:', data.error);
+        }
+    } catch (error) {
+        console.error('Error filtering courses:', error);
+    }
+}
+
+// Initialize courses page
+function initializeCoursesPage(searchTerm = '') {
+    loadCourses(searchTerm);
+}
+
+// Export the initialization function to be called from the parent page
+window.initializeCourses = function(searchTerm = '') {
+    loadCourses(searchTerm);
+};
+
+// Call initialize when the script loads
+initializeCoursesPage();
+
+function displayCourses() {
+    const container = document.getElementById('coursesContainer');
+    container.innerHTML = '';
+
+    courses.forEach(course => {
+        const courseCard = `
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="${course.image}" class="card-img-top" alt="${course.title}" onerror="this.src='https://placehold.co/400x250?text=${encodeURIComponent(course.title)}'">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${course.title}</h5>
+                        <p class="card-text flex-grow-1">${course.description}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="h5 mb-0 text-primary">£${course.price}</span>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary me-2" onclick="openCourseModal(${course.id})">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </button>
+                                <button class="btn btn-primary" onclick="addToCart(${course.id})">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.innerHTML += courseCard;
+    });
+}
+
+let currentCourseId = null;
+
+function openCourseModal(courseId) {
+    currentCourseId = courseId;
+    const course = courses.find(c => c.id === courseId);
+    if (!course) return;
+
+    document.getElementById('courseModalTitle').textContent = course.title;
+    document.getElementById('courseModalImage').src = course.image;
+    document.getElementById('courseModalImage').alt = course.title;
+    document.getElementById('courseModalDescription').textContent = course.description;
+
+    const modulesList = document.getElementById('courseModalModules');
+    modulesList.innerHTML = `
+        <li>Duration: ${course.duration}</li>
+        <li>Category: ${course.category}</li>
+    `;
+
+    const featuresList = document.getElementById('courseModalFeatures');
+    featuresList.innerHTML = `
+        <li>Accredited Course</li>
+        <li>24/7 Access</li>
+        <li>Certificate of Completion</li>
+        <li>Expert Support</li>
+    `;
+
+    // Update enroll button to add to cart
+    const enrollBtn = document.getElementById('courseModalEnroll');
+    enrollBtn.textContent = 'Add to Cart';
+    enrollBtn.onclick = () => {
+        addToCart(courseId);
+        const modal = bootstrap.Modal.getInstance(document.getElementById('courseModal'));
+        modal.hide();
+    };
+
+    const modal = new bootstrap.Modal(document.getElementById('courseModal'));
+    modal.show();
+}
+
+function setupCartButton() {
+    const cartBtn = document.querySelector('.cart-btn');
+    if (cartBtn) {
+        cartBtn.addEventListener('click', () => {
+            displayCart();
+            const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+            cartModal.show();
+        });
+    }
+
+    document.getElementById('courseModalAddToCart').addEventListener('click', () => {
+        if (currentCourseId) {
+            addToCart(currentCourseId);
+            const courseModal = bootstrap.Modal.getInstance(document.getElementById('courseModal'));
+            courseModal.hide();
+        }
+    });
+}
+
 function checkout() {
     if (cart.length === 0) {
         alert('Your cart is empty!');
@@ -297,3 +412,98 @@ function checkout() {
     cartModal.hide();
 }
 </script>
+
+<style>
+/* Add toast styles */
+.toast {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.toast-header {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Enhanced card styles */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+/* Enhanced button styles */
+.btn {
+    transition: all 0.2s ease;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-outline-primary {
+    color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-outline-primary:hover {
+    background: #007bff;
+    color: white;
+}
+
+/* Price tag style */
+.text-primary {
+    color: #007bff !important;
+    font-weight: 600;
+}
+
+/* Button group spacing */
+.btn-group {
+    gap: 0.5rem;
+}
+
+/* Cart icon animation */
+@keyframes cartBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.btn-primary:active .fa-cart-plus {
+    animation: cartBounce 0.3s ease;
+}
+</style>

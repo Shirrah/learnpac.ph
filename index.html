@@ -32,15 +32,19 @@
         <li class="nav-item"><a class="nav-link" href="?content=Courses">Courses</a></li>
         <li class="nav-item"><a class="nav-link" href="?content=Contacts">Contact</a></li>
         <li class="nav-item">
-          <form class="d-flex align-items-center position-relative" id="navbar-search-form" autocomplete="off">
-            <input type="text" class="form-control search-input" placeholder="Search courses..." aria-label="Search" id="search-input">
-            <button type="submit" class="btn btn-link position-absolute end-0 top-50 translate-middle-y px-2 text-success">
-              <i class="fas fa-search"></i>
-            </button>
+          <form class="d-flex align-items-center position-relative search-form" id="navbar-search-form" autocomplete="off">
+            <div class="search-container">
+              <input type="text" class="form-control search-input" placeholder="Search courses..." aria-label="Search" id="search-input">
+              <button type="submit" class="btn btn-link search-btn">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
           </form>
         </li>
         <li class="nav-item">
-          <a class="btn btn-outline-primary me-2" href="https://app.learnpac.co.uk/log-in/" target="_blank">Login</a>
+          <a class="btn btn-outline-primary me-2 login-btn" href="https://app.learnpac.co.uk/log-in/" target="_blank">
+            <i class="fas fa-user me-1"></i>Login
+          </a>
         </li>
         <li class="nav-item position-relative">
           <button class="btn btn-link position-relative cart-btn">
@@ -66,8 +70,19 @@
     NProgress.done();
   });
 
+  // Handle search form submission
+  document.getElementById('navbar-search-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent form submission
+    const searchTerm = document.getElementById('search-input').value;
+    if (searchTerm.trim()) {
+      // Navigate to courses page with search term
+      history.pushState({ content: 'Courses' }, '', '?content=Courses');
+      loadContent('Courses', searchTerm);
+    }
+  });
+
   // Load content by name with NProgress
-  function loadContent(content) {
+  function loadContent(content, searchTerm = '') {
     NProgress.start(); // Show loading progress
     const pageMap = {
       Home: "./html/home.html",
@@ -100,8 +115,8 @@
           });
 
           // Call page-specific initializer if defined
-          if (content === 'Courses' && typeof initializeCoursesPage === 'function') {
-            setTimeout(() => initializeCoursesPage(), 50);
+          if (content === 'Courses' && typeof window.initializeCourses === 'function') {
+            window.initializeCourses(searchTerm);
           }
 
           // Update nav link active state
@@ -262,39 +277,182 @@
 </div>
 
 <style>
-.chat-widget {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
+/* Header and Navbar Styles */
+.navbar {
+  padding: 0.8rem 0;
   transition: all 0.3s ease;
 }
 
-.chat-minimized {
-  width: 60px;
-  height: 60px;
-  background: #007bff;
-  border-radius: 50%;
+.navbar-brand img {
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover img {
+  transform: scale(1.05);
+}
+
+.nav-link {
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  color: #333 !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #007bff !important;
+}
+
+.nav-link.active {
+  color: #007bff !important;
+}
+
+/* Search Form Styles */
+.search-form {
+  margin: 0 1rem;
+  width: 250px;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  border-radius: 25px;
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
+  border: 1px solid #e0e0e0;
+  background: #f8f9fa;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.search-input:focus {
+  background: #fff;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.15);
+  outline: none;
+}
+
+.search-btn {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  padding: 0;
+  font-size: 0.9rem;
+  background: none;
+  border: none;
+}
+
+.search-btn:hover {
+  color: #007bff;
+}
+
+/* Search Results Dropdown */
+.search-results-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin-top: 0.5rem;
+  z-index: 1000;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+}
+
+.search-results-content {
+  padding: 0.5rem;
+}
+
+.search-result-item {
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  position: relative;
+}
+
+.search-result-item:hover {
+  background-color: #f8f9fa;
+}
+
+.search-result-item img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 1rem;
+}
+
+.search-result-item .course-info {
+  flex-grow: 1;
+}
+
+.search-result-item .course-title {
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.search-result-item .course-price {
+  color: #28a745;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.search-result-item .add-to-cart-btn {
+  padding: 0.5rem 1rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.search-result-item .add-to-cart-btn:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+}
+
+/* Login Button */
+.login-btn {
+  padding: 0.5rem 1.2rem;
+  border-radius: 25px;
+  font-weight: 500;
   transition: all 0.3s ease;
 }
 
-.chat-minimized:hover {
-  transform: scale(1.1);
-  background: #0056b3;
+.login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,123,255,0.15);
 }
 
-.chat-minimized i {
-  color: white;
-  font-size: 24px;
+/* Cart Button */
+.cart-btn {
+  color: #333;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
 }
 
-.notification-badge {
+.cart-btn:hover {
+  color: #007bff;
+  transform: translateY(-1px);
+}
+
+.cart-count {
   position: absolute;
   top: -5px;
   right: -5px;
@@ -303,164 +461,78 @@
   border-radius: 50%;
   width: 20px;
   height: 20px;
-  font-size: 12px;
+  font-size: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: pulse 2s infinite;
+  font-weight: 500;
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.chat-expanded {
-  position: absolute;
-  bottom: 70px;
-  right: 0;
-  width: 350px;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(20px);
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-.chat-widget:not(.minimized) .chat-expanded {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: all;
-}
-
-.chat-header {
-  background: #007bff;
-  color: white;
-  padding: 15px;
+/* Loading Animation */
+.search-loading {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  color: #666;
+  font-size: 0.9rem;
 }
 
-.chat-header .btn-close {
-  filter: brightness(0) invert(1);
-  opacity: 0.8;
-}
-
-.chat-body {
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-}
-
-.chat-messages {
-  flex-grow: 1;
-  padding: 15px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.message {
-  max-width: 80%;
-  padding: 10px 15px;
-  border-radius: 15px;
-  margin-bottom: 5px;
-  animation: messageSlide 0.3s ease;
-}
-
-@keyframes messageSlide {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.message.user {
-  align-self: flex-end;
-  background: #007bff;
-  color: white;
-  border-bottom-right-radius: 5px;
-}
-
-.message.bot {
-  align-self: flex-start;
-  background: #f0f0f0;
-  color: #333;
-  border-bottom-left-radius: 5px;
-}
-
-.chat-input {
-  padding: 15px;
-  border-top: 1px solid #eee;
-  display: flex;
-  gap: 10px;
-  background: white;
-}
-
-.chat-input input {
-  flex-grow: 1;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.chat-input input:focus {
-  border-color: #007bff;
-}
-
-.chat-input button {
-  background: #007bff;
-  color: white;
-  border: none;
+.search-loading::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border: 2px solid #007bff;
+  border-top-color: transparent;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
+  margin-left: 0.5rem;
+  animation: spin 0.8s linear infinite;
 }
 
-.chat-input button:hover {
-  background: #0056b3;
-  transform: scale(1.05);
+/* No Results Styling */
+.no-results {
+  text-align: center;
+  padding: 1.5rem;
+  color: #666;
 }
 
-/* Custom scrollbar for chat messages */
-.chat-messages::-webkit-scrollbar {
-  width: 6px;
+.no-results i {
+  font-size: 2rem;
+  color: #ddd;
+  margin-bottom: 0.5rem;
 }
 
-.chat-messages::-webkit-scrollbar-track {
-  background: #f1f1f1;
+.no-results p {
+  margin: 0;
+  font-size: 0.9rem;
 }
 
-.chat-messages::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 3px;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.chat-messages::-webkit-scrollbar-thumb:hover {
-  background: #555;
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+  .search-form {
+    margin: 1rem 0;
+    width: 250px;
+  }
+  
+  .navbar-nav {
+    padding: 1rem 0;
+  }
+  
+  .nav-link {
+    padding: 0.5rem 0 !important;
+  }
+  
+  .login-btn {
+    margin: 0.5rem 0;
+    width: 100%;
+    text-align: center;
+  }
 }
 </style>
 
@@ -515,6 +587,142 @@ function addMessage(text, type) {
   messages.appendChild(messageDiv);
   messages.scrollTop = messages.scrollHeight;
 }
+
+// Add cart functionality
+let cart = [];
+
+// Load cart from server
+async function loadCart() {
+    try {
+        const response = await fetch('data/cart_operations.php?action=get_cart');
+        const data = await response.json();
+        
+        if (data.success) {
+            cart = data.cart;
+            updateCartCount();
+            displayCart();
+        }
+    } catch (error) {
+        console.error('Error loading cart:', error);
+    }
+}
+
+// Display cart items
+function displayCart() {
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    
+    if (!cartItems || !cartTotal) return;
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = `
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+            </div>
+        `;
+        cartTotal.textContent = '0.00';
+        return;
+    }
+
+    let total = 0;
+    cartItems.innerHTML = '';
+
+    cart.forEach(item => {
+        total += item.price;
+        cartItems.innerHTML += `
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.title}" onerror="this.src='https://placehold.co/50x50?text=${encodeURIComponent(item.title)}'">
+                <div class="cart-item-info">
+                    <div class="cart-item-title">${item.title}</div>
+                    <div class="cart-item-price">£${item.price.toFixed(2)}</div>
+                </div>
+                <button class="cart-item-remove" onclick="removeFromCart(${item.id})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+    });
+
+    cartTotal.textContent = total.toFixed(2);
+}
+
+// Remove from cart
+async function removeFromCart(courseId) {
+    try {
+        const response = await fetch(`data/cart_operations.php?action=remove_from_cart&courseId=${courseId}`, {
+            method: 'DELETE'
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            await loadCart(); // Reload cart after removing item
+        }
+    } catch (error) {
+        console.error('Error removing from cart:', error);
+    }
+}
+
+// Update cart count in navbar
+function updateCartCount() {
+    const cartCount = document.querySelector('.cart-count');
+    if (cartCount) {
+        cartCount.textContent = cart.length;
+    }
+}
+
+// Checkout function
+function checkout() {
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    alert('Thank you for your purchase! This is a demo, so no actual payment will be processed.');
+    cart = [];
+    updateCartCount();
+    const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+    cartModal.hide();
+}
+
+// Initialize cart when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadCart();
+    
+    // Setup cart button click handler
+    const cartBtn = document.querySelector('.cart-btn');
+    if (cartBtn) {
+        cartBtn.addEventListener('click', () => {
+            displayCart();
+            const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+            cartModal.show();
+        });
+    }
+});
 </script>
+
+<!-- Add Cart Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Shopping Cart</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="cartItems">
+          <!-- Cart items will be dynamically loaded here -->
+        </div>
+        <div class="text-end mt-3">
+          <h5>Total: £<span id="cartTotal">0.00</span></h5>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
