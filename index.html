@@ -64,6 +64,7 @@
   <div class="chat-minimized">
     <i class="fas fa-robot"></i>
     <span class="notification-badge">1</span>
+    <div class="tooltip-message">Hi! I'm LP 👋<br>Need help? Click me!</div>
   </div>
   <div class="chat-expanded">
     <div class="chat-header">
@@ -333,6 +334,18 @@ const chatWidget = {
   typingTimeout: null,
   maxMessages: 50,
   markdown: null,
+  tooltipMessages: [
+    "Hi! I'm LP 👋\nNeed help? Click me!",
+    "Hey there! 👋\nLet's chat about courses!",
+    "Hello! 🌟\nI can help you find the perfect course!",
+    "Hi friend! 🤖\nAsk me anything about training!",
+    "Need guidance? 🎓\nI'm here to help!",
+    "Want to learn? 📚\nLet's explore together!",
+    "Hello! 💫\nYour learning journey starts here!",
+    "Hi! 🚀\nReady to discover new courses?"
+  ],
+  currentTooltipIndex: 0,
+  tooltipInterval: null,
   quickReplies: [
     "Tell me about your courses",
     "What are your prices?",
@@ -348,6 +361,7 @@ const chatWidget = {
     }
     this.bindEvents();
     this.loadMessages();
+    this.startTooltipRotation();
     
     // Show notification badge initially
     this.showNotification();
@@ -374,7 +388,16 @@ const chatWidget = {
     const minimizedButton = document.querySelector('.chat-minimized');
     const newChatButton = document.querySelector('.btn-new-chat');
 
-    minimizedButton?.addEventListener('click', () => this.toggleChat());
+    // Ensure widget starts minimized
+    widget.classList.add('minimized');
+    this.isOpen = false;
+
+    minimizedButton?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.toggleChat();
+    });
+
     closeButton?.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -392,6 +415,7 @@ const chatWidget = {
 
     sendButton?.addEventListener('click', () => this.sendMessage());
 
+    // Prevent chat expansion from closing when clicking inside
     const chatExpanded = widget?.querySelector('.chat-expanded');
     chatExpanded?.addEventListener('click', (e) => e.stopPropagation());
   },
@@ -399,11 +423,15 @@ const chatWidget = {
   toggleChat() {
     const widget = document.getElementById('chatWidget');
     this.isOpen = !this.isOpen;
-    widget.classList.toggle('minimized');
     
     if (this.isOpen) {
+      widget.classList.remove('minimized');
       this.hideNotification();
       this.scrollToBottom();
+      this.stopTooltipRotation();
+    } else {
+      widget.classList.add('minimized');
+      this.startTooltipRotation();
     }
   },
 
@@ -485,8 +513,8 @@ const chatWidget = {
     
     // Convert markdown to HTML if it's a bot message
     const formattedText = type === 'bot' && this.markdown ? 
-      this.markdown.parse(text) : 
-      text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      this.markdown.parse(text.replace(/\n/g, '<br>')) : 
+      text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
     
     // Add message actions
     const actions = type === 'bot' ? `
@@ -743,7 +771,39 @@ const chatWidget = {
     `;
     messages.appendChild(messageDiv);
     this.scrollToBottom();
-  }
+  },
+
+  startTooltipRotation() {
+    const minimizedButton = document.querySelector('.chat-minimized');
+    if (minimizedButton) {
+      // Set initial tooltip
+      minimizedButton.setAttribute('data-tooltip', this.tooltipMessages[0]);
+      
+      // Start rotation with fade effect
+      this.tooltipInterval = setInterval(() => {
+        const tooltipElement = minimizedButton.querySelector('.tooltip-message');
+        if (tooltipElement) {
+          tooltipElement.style.opacity = '0';
+          
+          setTimeout(() => {
+            this.currentTooltipIndex = (this.currentTooltipIndex + 1) % this.tooltipMessages.length;
+            tooltipElement.textContent = this.tooltipMessages[this.currentTooltipIndex];
+            tooltipElement.style.opacity = '1';
+          }, 300); // Fade out duration
+        }
+      }, 6000); // Change message every 6 seconds
+    }
+  },
+
+  stopTooltipRotation() {
+    if (this.tooltipInterval) {
+      clearInterval(this.tooltipInterval);
+      const tooltipElement = document.querySelector('.tooltip-message');
+      if (tooltipElement) {
+        tooltipElement.style.opacity = '1';
+      }
+    }
+  },
 };
 
 // Initialize chat widget when DOM is loaded
@@ -1152,7 +1212,6 @@ document.addEventListener('DOMContentLoaded', () => {
   justify-content: center;
   padding: 1rem;
   color: #666;
-  font-size: 0.9rem;
 }
 
 .search-loading::after {
@@ -1217,42 +1276,16 @@ document.addEventListener('DOMContentLoaded', () => {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 9999; /* Increased z-index to ensure visibility */
-  display: block !important; /* Force display */
-}
-
-.chat-minimized {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  position: relative;
-  transition: transform 0.3s ease;
-}
-
-.chat-minimized i {
-  color: white;
-  font-size: 24px;
+  z-index: 9999;
+  display: block !important;
 }
 
 .chat-widget.minimized .chat-expanded {
-  display: none;
+  display: none !important;
 }
 
 .chat-widget:not(.minimized) .chat-minimized {
-  display: none;
-}
-
-/* Enhanced Chat Widget Styles */
-.chat-widget.minimized .chat-expanded {
-  display: none;
-  transform: translateY(20px);
-  opacity: 0;
+  display: none !important;
 }
 
 .chat-minimized {
@@ -1269,13 +1302,59 @@ document.addEventListener('DOMContentLoaded', () => {
   transition: transform 0.3s ease;
 }
 
-.chat-minimized:hover {
-  transform: scale(1.05);
-}
-
 .chat-minimized i {
   color: white;
   font-size: 24px;
+  z-index: 2;
+}
+
+.tooltip-message {
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-size: 14px;
+  color: #333;
+  white-space: pre-line;
+  z-index: 1000;
+  text-align: center;
+  min-width: 180px;
+  transition: opacity 0.3s ease;
+}
+
+.tooltip-message::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 8px solid transparent;
+  border-left-color: white;
+}
+
+/* Add animation for the tooltip */
+@keyframes tooltipPulse {
+  0% { transform: translateY(-50%) scale(1); }
+  50% { transform: translateY(-50%) scale(1.05); }
+  100% { transform: translateY(-50%) scale(1); }
+}
+
+.tooltip-message {
+  animation: tooltipPulse 2s infinite;
+}
+
+/* Add hover effect for the chat button */
+.chat-minimized:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.chat-minimized:hover i {
+  transform: scale(1.1);
 }
 
 .notification-badge {
