@@ -1,118 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-        .course-card { margin-bottom: 20px; }
-    </style>
+  <meta charset="UTF-8">
+  <title>NProgress Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+    }
+    #courses {
+      margin-top: 2rem;
+    }
+    .course {
+      background: #f0f0f0;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    #nprogress .bar {
+      background: #ff3c00 !important;
+    }
+  </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Course List</h1>
+  <h1>Course Loader Demo</h1>
+  <button onclick="loadCourses()">Load Courses</button>
 
-        <!-- Search and Category Filter -->
-        <div class="form-group">
-            <label for="courseSearch">Search Courses:</label>
-            <input type="text" id="courseSearch" class="form-control" placeholder="Search by title or description">
-        </div>
+  <div id="courses"></div>
 
-        <div class="form-group">
-            <label for="categoryFilter">Filter by Category:</label>
-            <select id="categoryFilter" class="form-control">
-                <option value="All Categories">All Categories</option>
-                <option value="Development">Development</option>
-                <option value="Business">Business</option>
-                <option value="Design">Design</option>
-            </select>
-        </div>
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+  <script>
+    // Page load progress
+    document.addEventListener('DOMContentLoaded', () => {
+      NProgress.start();
+    });
 
-        <!-- Courses will be displayed here -->
-        <div id="coursesContainer" class="row">
-            <!-- Courses will be loaded dynamically -->
-        </div>
-    </div>
+    window.addEventListener('load', () => {
+      NProgress.done();
+    });
 
-    <script>
-        // JSON data representing courses
-        const coursesData = [
-            {
-                "id": 1,
-                "title": "Learn JavaScript",
-                "description": "A complete guide to JavaScript programming for beginners.",
-                "category": "Development",
-                "image": "https://via.placeholder.com/150"
-            },
-            {
-                "id": 2,
-                "title": "Business Strategy Masterclass",
-                "description": "Master the skills required to run a successful business.",
-                "category": "Business",
-                "image": "https://via.placeholder.com/150"
-            },
-            {
-                "id": 3,
-                "title": "Graphic Design for Beginners",
-                "description": "Learn the basics of graphic design, including layout and typography.",
-                "category": "Design",
-                "image": "https://via.placeholder.com/150"
-            },
-            {
-                "id": 4,
-                "title": "React Development for Beginners",
-                "description": "Learn how to build web applications using React.",
-                "category": "Development",
-                "image": "https://via.placeholder.com/150"
-            }
-        ];
+    // Simulated AJAX course loader
+    function loadCourses() {
+      NProgress.start();
+      fetch('./data/courses.json')
+        .then(res => res.json())
+        .then(data => {
+          const courseList = document.getElementById('courses');
+          courseList.innerHTML = ''; // Clear previous
 
-        // Function to display courses
-        function displayCourses(courses) {
-            const container = document.getElementById('coursesContainer');
-            container.innerHTML = '';  // Clear any existing courses
-            courses.forEach(course => {
-                const courseCard = document.createElement('div');
-                courseCard.classList.add('col-lg-4');
-                courseCard.classList.add('course-card');
-                courseCard.innerHTML = `
-                    <div class="card">
-                        <img class="card-img-top" src="${course.image}" alt="${course.title}">
-                        <div class="card-body">
-                            <h5 class="card-title">${course.title}</h5>
-                            <p class="card-text">${course.description}</p>
-                            <span class="badge badge-primary">${course.category}</span>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(courseCard);
-            });
-        }
-
-        // Filter by search term
-        document.getElementById('courseSearch').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const filteredCourses = coursesData.filter(course => 
-                course.title.toLowerCase().includes(searchTerm) || 
-                course.description.toLowerCase().includes(searchTerm) || 
-                course.category.toLowerCase().includes(searchTerm)
-            );
-            displayCourses(filteredCourses);
+          data.courses.forEach(course => {
+            const div = document.createElement('div');
+            div.className = 'course';
+            div.innerHTML = `<strong>${course.title}</strong><br>${course.description}`;
+            courseList.appendChild(div);
+          });
+        })
+        .catch(err => {
+          console.error('Failed to load courses:', err);
+          alert('Error loading courses.');
+        })
+        .finally(() => {
+          NProgress.done();
         });
-
-        // Filter by category
-        document.getElementById('categoryFilter').addEventListener('change', function(e) {
-            const selectedCategory = e.target.value;
-            const filteredCourses = selectedCategory === 'All Categories'
-                ? coursesData
-                : coursesData.filter(course => course.category === selectedCategory);
-            displayCourses(filteredCourses);
-        });
-
-        // Display all courses initially
-        displayCourses(coursesData);
-    </script>
-
+    }
+  </script>
 </body>
 </html>

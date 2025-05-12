@@ -1,141 +1,299 @@
-  <!-- Courses Hero Section -->
-  <section class="hero d-flex align-items-center">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 text-white hero-content text-md-start text-center">
-          <h1 class="display-4 fw-bold mb-4">Our Courses</h1>
-          <p class="lead mb-4">Discover our comprehensive range of healthcare and social care training programs.</p>
-          <p class="h4 mb-4">Transform your career with accredited online courses.</p>
-        </div>
-        <div class="col-lg-6 text-center">
-          <img src="https://placehold.co/600x400?text=Healthcare+Courses" alt="Healthcare Courses" class="img-fluid rounded">
-        </div>
+<!-- Courses Hero Section -->
+<section class="hero d-flex align-items-center">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 text-white hero-content text-md-start text-center">
+        <h1 class="display-4 fw-bold mb-4">Our Courses</h1>
+        <p class="lead mb-4">Discover our comprehensive range of healthcare and social care training programs.</p>
+        <p class="h4 mb-4">Transform your career with accredited online courses.</p>
+      </div>
+      <div class="col-lg-6 text-center">
+        <img src="https://placehold.co/600x400?text=Healthcare+Courses" alt="Healthcare Courses" class="img-fluid rounded">
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Course Search and Filter Section -->
-  <section class="py-5 bg-light">
-    <div class="container">
-      <div class="row mb-4">
-        <div class="col-md-6">
-          <div class="input-group">
-            <input type="text" class="form-control" id="courseSearch" placeholder="Search courses...">
-            <button class="btn btn-primary" type="button">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="d-flex justify-content-md-end mt-3 mt-md-0">
-            <select class="form-select" id="categoryFilter" style="max-width: 200px;">
-              <option value="">All Categories</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Social Care">Social Care</option>
-              <option value="Mental Health">Mental Health</option>
-            </select>
-          </div>
+<!-- Course Search and Filter Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="form-control" id="courseSearch" placeholder="Search courses...">
+          <button class="btn btn-primary" type="button" onclick="filterCourses()">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Featured Courses Section -->
-  <section class="featured-courses py-5">
-    <div class="container">
-      <div class="row text-center mb-5">
-        <div class="col-12">
-          <h2 class="display-6 fw-bold">Featured Courses</h2>
-          <p class="lead text-muted">Explore our most popular training programs</p>
-        </div>
-      </div>
-      <div class="row g-4" id="coursesContainer">
-        <!-- Course cards will be dynamically inserted here -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Course Features Section -->
-  <section class="features py-5 bg-light">
-    <div class="container">
-      <div class="row text-center mb-5">
-        <div class="col-12">
-          <h2 class="display-6 fw-bold">Why Choose Our Courses?</h2>
-          <p class="lead text-muted">Benefits of learning with LearnPac</p>
-        </div>
-      </div>
-      <div class="row g-4" id="featuresContainer">
-        <!-- Features will be dynamically inserted here -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Course Categories Section -->
-  <section class="testimonials py-5">
-    <div class="container">
-      <div class="row text-center mb-5">
-        <div class="col-12">
-          <h2 class="display-6 fw-bold">Course Categories</h2>
-          <p class="lead text-muted">Browse courses by category</p>
-        </div>
-      </div>
-      <div class="row g-4" id="categoriesContainer">
-        <!-- Categories will be dynamically inserted here -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to Action Section -->
-  <section class="cta py-5 bg-primary text-white">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-8 text-center text-lg-start">
-          <h2 class="display-6 fw-bold mb-3">Ready to Start Your Learning Journey?</h2>
-          <p class="lead mb-0">Join thousands of healthcare professionals who have transformed their careers with LearnPac.</p>
-        </div>
-        <div class="col-lg-4 text-center text-lg-end mt-4 mt-lg-0">
-          <a href="#" class="btn btn-light btn-lg">Browse All Courses</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Course Modal -->
-  <div class="modal fade" id="courseModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="courseModalTitle"></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6">
-              <img src="" alt="" class="img-fluid rounded mb-3" id="courseModalImage">
-            </div>
-            <div class="col-md-6">
-              <p class="lead" id="courseModalDescription"></p>
-              <div class="mb-3">
-                <h6>Course Modules:</h6>
-                <ul id="courseModalModules"></ul>
-              </div>
-              <div class="mb-3">
-                <h6>Course Features:</h6>
-                <ul id="courseModalFeatures"></ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <a href="#" class="btn btn-primary" id="courseModalEnroll">Enroll Now</a>
+      <div class="col-md-6">
+        <div class="d-flex justify-content-md-end mt-3 mt-md-0">
+          <select class="form-select" id="categoryFilter" style="max-width: 200px;" onchange="filterCourses()">
+            <option value="">All Categories</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Social Care">Social Care</option>
+            <option value="Mental Health">Mental Health</option>
+          </select>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <script src="../script/courses.js"></script>
-  <script>
-  // Initialize courses page when content is loaded
-  document.addEventListener('DOMContentLoaded', initializeCoursesPage);
-  </script> 
+<!-- Featured Courses Section -->
+<section class="featured-courses py-5">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="display-6 fw-bold">Featured Courses</h2>
+        <p class="lead text-muted">Explore our most popular training programs</p>
+      </div>
+    </div>
+    <div class="row g-4" id="coursesContainer">
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://placehold.co/400x250?text=Healthcare+Course+1" class="card-img-top" alt="Basic Healthcare Training">
+          <div class="card-body">
+            <h5 class="card-title">Basic Healthcare Training</h5>
+            <p class="card-text">Learn the fundamentals of healthcare practice.</p>
+            <a href="#" class="btn btn-primary" onclick="openCourseModal(1)">View Details</a>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://placehold.co/400x250?text=Mental+Health+Course" class="card-img-top" alt="Mental Health Awareness">
+          <div class="card-body">
+            <h5 class="card-title">Mental Health Awareness</h5>
+            <p class="card-text">Understand the basics of mental health and wellbeing.</p>
+            <a href="#" class="btn btn-primary" onclick="openCourseModal(2)">View Details</a>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://placehold.co/400x250?text=Social+Care+Course" class="card-img-top" alt="Social Care Foundations">
+          <div class="card-body">
+            <h5 class="card-title">Social Care Foundations</h5>
+            <p class="card-text">An introduction to working in the social care sector.</p>
+            <a href="#" class="btn btn-primary" onclick="openCourseModal(3)">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- Course Modal -->
+<div class="modal fade" id="courseModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="courseModalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="" alt="" class="img-fluid rounded mb-3" id="courseModalImage">
+          </div>
+          <div class="col-md-6">
+            <p class="lead" id="courseModalDescription"></p>
+            <div class="mb-3">
+              <h6>Course Modules:</h6>
+              <ul id="courseModalModules"></ul>
+            </div>
+            <div class="mb-3">
+              <h6>Course Features:</h6>
+              <ul id="courseModalFeatures"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="#" class="btn btn-primary" id="courseModalEnroll">Enroll Now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Shopping Cart Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Shopping Cart</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="cartItems">
+          <!-- Cart items will be dynamically loaded here -->
+        </div>
+        <div class="text-end mt-3">
+          <h5>Total: £<span id="cartTotal">0.00</span></h5>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../data/courses.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+// Initialize courses page
+function initializeCoursesPage() {
+    displayCourses();
+    setupCartButton();
+}
+
+function displayCourses() {
+    const container = document.getElementById('coursesContainer');
+    container.innerHTML = '';
+
+    courses.forEach(course => {
+        const courseCard = `
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <img src="${course.image}" class="card-img-top" alt="${course.title}" onerror="this.src='https://placehold.co/400x250?text=${encodeURIComponent(course.title)}'">
+                    <div class="card-body">
+                        <h5 class="card-title">${course.title}</h5>
+                        <p class="card-text">${course.description}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 mb-0">£${course.price}</span>
+                            <button class="btn btn-primary" onclick="openCourseModal(${course.id})">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.innerHTML += courseCard;
+    });
+}
+
+function filterCourses() {
+    const searchTerm = document.getElementById('courseSearch').value.toLowerCase();
+    const category = document.getElementById('categoryFilter').value;
+    
+    const filteredCourses = courses.filter(course => {
+        const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
+                            course.description.toLowerCase().includes(searchTerm);
+        const matchesCategory = !category || course.category === category;
+        return matchesSearch && matchesCategory;
+    });
+
+    const container = document.getElementById('coursesContainer');
+    container.innerHTML = '';
+
+    filteredCourses.forEach(course => {
+        const courseCard = `
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <img src="${course.image}" class="card-img-top" alt="${course.title}" onerror="this.src='https://placehold.co/400x250?text=${encodeURIComponent(course.title)}'">
+                    <div class="card-body">
+                        <h5 class="card-title">${course.title}</h5>
+                        <p class="card-text">${course.description}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 mb-0">£${course.price}</span>
+                            <button class="btn btn-primary" onclick="openCourseModal(${course.id})">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.innerHTML += courseCard;
+    });
+}
+
+let currentCourseId = null;
+
+function openCourseModal(courseId) {
+    currentCourseId = courseId;
+    const course = courses.find(c => c.id === courseId);
+    if (!course) return;
+
+    document.getElementById('courseModalTitle').textContent = course.title;
+    document.getElementById('courseModalImage').src = course.image;
+    document.getElementById('courseModalImage').alt = course.title;
+    document.getElementById('courseModalDescription').textContent = course.description;
+    document.getElementById('courseModalPrice').textContent = course.price.toFixed(2);
+
+    const detailsList = document.getElementById('courseModalDetails');
+    detailsList.innerHTML = `
+        <li>Duration: ${course.duration}</li>
+        <li>Category: ${course.category}</li>
+    `;
+
+    const modal = new bootstrap.Modal(document.getElementById('courseModal'));
+    modal.show();
+}
+
+function setupCartButton() {
+    const cartBtn = document.querySelector('.cart-btn');
+    if (cartBtn) {
+        cartBtn.addEventListener('click', () => {
+            displayCart();
+            const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+            cartModal.show();
+        });
+    }
+
+    document.getElementById('courseModalAddToCart').addEventListener('click', () => {
+        if (currentCourseId) {
+            addToCart(currentCourseId);
+            const courseModal = bootstrap.Modal.getInstance(document.getElementById('courseModal'));
+            courseModal.hide();
+        }
+    });
+}
+
+function displayCart() {
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="text-center">Your cart is empty</p>';
+        cartTotal.textContent = '0.00';
+        return;
+    }
+
+    let total = 0;
+    cartItems.innerHTML = '';
+
+    cart.forEach(item => {
+        total += item.price;
+        cartItems.innerHTML += `
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h6 class="mb-0">${item.title}</h6>
+                    <small class="text-muted">£${item.price.toFixed(2)}</small>
+                </div>
+                <button class="btn btn-sm btn-danger" onclick="removeFromCart(${item.id})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+    });
+
+    cartTotal.textContent = total.toFixed(2);
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    alert('Thank you for your purchase! This is a demo, so no actual payment will be processed.');
+    cart = [];
+    updateCartCount();
+    const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+    cartModal.hide();
+}
+</script>

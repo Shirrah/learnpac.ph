@@ -9,9 +9,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="icon" type="image/x-icon" href="./assets/images/lplogo.png">
   <link rel="stylesheet" href="style/index.css">
+
+  <!-- NProgress -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
 </head>
 <body>
-
 
 <!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
@@ -51,12 +53,22 @@
   </div>
 </nav>
 
-
 <div id="main">Loading...</div>
 
+<script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
 <script>
-  // Load content by name
+  // Start NProgress on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    NProgress.start();
+  });
+
+  window.addEventListener('load', () => {
+    NProgress.done();
+  });
+
+  // Load content by name with NProgress
   function loadContent(content) {
+    NProgress.start(); // Show loading progress
     const pageMap = {
       Home: "./html/home.html",
       About: "./html/about-us.html",
@@ -72,38 +84,53 @@
       fetch(page)
         .then(res => res.ok ? res.text() : Promise.reject("Page not found"))
         .then(html => {
-          document.getElementById("main").innerHTML = html;
-          // Initialize courses page if we're on the courses page
+          const main = document.getElementById("main");
+          main.innerHTML = html;
+
+          // Re-execute any scripts inside the loaded HTML
+          main.querySelectorAll("script").forEach(oldScript => {
+            const newScript = document.createElement("script");
+            if (oldScript.src) {
+              newScript.src = oldScript.src;
+            } else {
+              newScript.textContent = oldScript.textContent;
+            }
+            document.body.appendChild(newScript);
+            oldScript.remove();
+          });
+
+          // Call page-specific initializer if defined
           if (content === 'Courses' && typeof initializeCoursesPage === 'function') {
-            initializeCoursesPage();
+            setTimeout(() => initializeCoursesPage(), 50);
           }
-          
-          // Update active state in navigation
+
+          // Update nav link active state
           document.querySelectorAll('.nav-link').forEach(link => {
             const href = link.getAttribute('href');
             if (href && href.startsWith('?content=')) {
               const linkContent = new URLSearchParams(href.split('?')[1]).get("content");
-              if (linkContent === content) {
-                link.classList.add('active');
-              } else {
-                link.classList.remove('active');
-              }
+              link.classList.toggle('active', linkContent === content);
             }
           });
         })
-        .catch(err => document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>");
+        .catch(err => {
+          document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>";
+          console.error(err);
+        })
+        .finally(() => {
+          NProgress.done(); // Hide loading progress once content is loaded
+        });
     } else {
       document.getElementById("main").innerHTML = "<h1>404 - Page Not Found</h1>";
+      NProgress.done();
     }
   }
 
-  // Intercept clicks for internal nav
+  // Intercept nav clicks and manage history
   document.addEventListener('DOMContentLoaded', () => {
-    // Load content on initial page load
     const initialContent = new URLSearchParams(window.location.search).get("content") || "Home";
     loadContent(initialContent);
 
-    // Setup nav link handling
     document.querySelectorAll('a.nav-link').forEach(link => {
       link.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
@@ -117,15 +144,11 @@
     });
   });
 
-  // Handle browser back/forward
   window.addEventListener('popstate', event => {
     const content = (event.state && event.state.content) || new URLSearchParams(window.location.search).get("content") || "Home";
     loadContent(content);
   });
 </script>
-
-
-
 
 
 <!-- Footer -->
@@ -205,5 +228,293 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- AI Chat Widget -->
+<div class="chat-widget minimized" id="chatWidget">
+  <div class="chat-minimized" onclick="toggleChat()">
+    <i class="fas fa-robot"></i>
+    <span class="notification-badge">1</span>
+  </div>
+  <div class="chat-expanded">
+    <div class="chat-header">
+      <div class="d-flex align-items-center">
+        <i class="fas fa-robot me-2"></i>
+        <span>AI Assistant</span>
+      </div>
+      <button class="btn-close btn-close-white" onclick="toggleChat()"></button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-messages" id="chatMessages">
+        <div class="message bot">
+          <div class="message-content">
+            Hi there! I'm LP, your AI assistant. How can I help you today?
+          </div>
+        </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
+        <button onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.chat-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.chat-minimized {
+  width: 60px;
+  height: 60px;
+  background: #007bff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.chat-minimized:hover {
+  transform: scale(1.1);
+  background: #0056b3;
+}
+
+.chat-minimized i {
+  color: white;
+  font-size: 24px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #dc3545;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.chat-expanded {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  width: 350px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.chat-widget:not(.minimized) .chat-expanded {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.chat-header {
+  background: #007bff;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-header .btn-close {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+.chat-body {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  max-width: 80%;
+  padding: 10px 15px;
+  border-radius: 15px;
+  margin-bottom: 5px;
+  animation: messageSlide 0.3s ease;
+}
+
+@keyframes messageSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message.user {
+  align-self: flex-end;
+  background: #007bff;
+  color: white;
+  border-bottom-right-radius: 5px;
+}
+
+.message.bot {
+  align-self: flex-start;
+  background: #f0f0f0;
+  color: #333;
+  border-bottom-left-radius: 5px;
+}
+
+.chat-input {
+  padding: 15px;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 10px;
+  background: white;
+}
+
+.chat-input input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.chat-input input:focus {
+  border-color: #007bff;
+}
+
+.chat-input button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.chat-input button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Custom scrollbar for chat messages */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+</style>
+
+<script>
+function toggleChat() {
+  const widget = document.getElementById('chatWidget');
+  widget.classList.toggle('minimized');
+  
+  // Remove notification badge when chat is opened
+  if (!widget.classList.contains('minimized')) {
+    const badge = document.querySelector('.notification-badge');
+    if (badge) {
+      badge.style.display = 'none';
+    }
+  }
+}
+
+function handleChatInput(event) {
+  if (event.key === 'Enter') {
+    sendMessage();
+  }
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const message = input.value.trim();
+  
+  if (message) {
+    addMessage(message, 'user');
+    input.value = '';
+    
+    // Simulate AI response after a short delay
+    setTimeout(() => {
+      const responses = [
+        "Hi! LP here. I'd be happy to help you with our courses.",
+        "As LP, I can guide you through our training programs.",
+        "LP at your service! Let me help you find the perfect course.",
+        "That's a great question! LP here to assist you with that.",
+        "Need help? LP is here to provide all the information you need."
+      ];
+      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+      addMessage(randomResponse, 'bot');
+    }, 1000);
+  }
+}
+
+function addMessage(text, type) {
+  const messages = document.getElementById('chatMessages');
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `message ${type}`;
+  messageDiv.innerHTML = `<div class="message-content">${text}</div>`;
+  messages.appendChild(messageDiv);
+  messages.scrollTop = messages.scrollHeight;
+}
+</script>
 </body>
 </html>
