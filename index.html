@@ -59,6 +59,39 @@
 
 <div id="main">Loading...</div>
 
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+  <div class="chat-minimized">
+    <i class="fas fa-robot"></i>
+    <span class="notification-badge">1</span>
+  </div>
+  <div class="chat-expanded">
+    <div class="chat-header">
+      <div class="d-flex align-items-center">
+        <i class="fas fa-robot me-2"></i>
+        <span>AI Assistant</span>
+      </div>
+      <div class="chat-header-actions">
+        <button class="btn-new-chat" title="Start new chat">
+          <i class="fas fa-plus"></i>
+        </button>
+        <button class="btn-close btn-close-white"></button>
+      </div>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-messages" id="chatMessages">
+        <!-- Messages will be added here dynamically -->
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type your message...">
+        <button>
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
 <script>
   // Start NProgress on page load
@@ -169,73 +202,109 @@
 <!-- Footer -->
 <footer class="footer-dark py-5">
   <div class="container">
-    <div class="row justify-content-between align-items-center mb-5">
-      <div class="col-md-6">
-        <h2 class="fw-bold text-white">Ready to Transform Your Learning Experience?</h2>
-        <p class="text-white-50">Join thousands of organizations already using LearnPac</p>
-      </div>
-      <div class="col-md-6 text-md-end mt-3 mt-md-0">
-        <a href="#" class="btn btn-brand me-2">Get Started</a>
-        <a href="#" class="btn btn-outline-light">Contact Sales</a>
-      </div>
+    <!-- Newsletter Section -->
+    <div class="newsletter-section text-center mb-5">
+      <h2 class="fw-bold text-white mb-3">Stay Updated with LearnPac</h2>
+      <p class="text-white-50 mb-4">Subscribe to our newsletter for the latest courses, updates, and exclusive offers.</p>
+      <form class="newsletter-form d-flex justify-content-center gap-2">
+        <div class="input-group" style="max-width: 500px;">
+          <input type="email" class="form-control" placeholder="Enter your email address">
+          <button class="btn btn-brand">Subscribe</button>
+        </div>
+      </form>
     </div>
 
+    <!-- Main Footer Content -->
     <div class="row g-4">
+      <!-- Company Info -->
       <div class="col-lg-4 col-md-6">
-        <img src="./assets/images/lplogo.png" alt="LearnPac Logo" class="mb-3" width="150">
-        <p class="text-white-50 mb-3">Empowering organizations with accredited online training solutions and professional qualifications.</p>
-        <div class="social-icons d-flex gap-3 mb-3">
-          <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="text-white"><i class="fab fa-x-twitter"></i></a>
-          <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+        <img src="./assets/images/lplogo.png" alt="LearnPac Logo" class="mb-4" width="150">
+        <p class="text-white-50 mb-4">Empowering organizations with accredited online training solutions and professional qualifications. Join thousands of learners worldwide.</p>
+        <div class="social-icons d-flex gap-3 mb-4">
+          <a href="#" class="social-icon" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-icon" aria-label="Twitter">
+            <i class="fab fa-x-twitter"></i>
+          </a>
+          <a href="#" class="social-icon" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="social-icon" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
         </div>
-        <form class="d-flex newsletter-form">
-          <input type="email" class="form-control" placeholder="Enter your email">
-          <button class="btn btn-brand ms-2">Subscribe</button>
-        </form>
       </div>
+
+      <!-- Quick Links -->
       <div class="col-lg-2 col-md-6">
-        <h6 class="text-white mb-3">Company</h6>
+        <h6 class="text-white mb-3 fw-bold">Quick Links</h6>
         <ul class="list-unstyled footer-links">
-          <li><a href="./html/about-us.html">About Us</a></li>
-          <li><a href="./html/Services.php">Services</a></li>
-          <li><a href="#courses">Courses</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="?content=Home">Home</a></li>
+          <li><a href="?content=About">About Us</a></li>
+          <li><a href="?content=Services">Services</a></li>
+          <li><a href="?content=Courses">Courses</a></li>
+          <li><a href="?content=Contacts">Contact</a></li>
         </ul>
       </div>
+
+      <!-- Resources -->
       <div class="col-lg-2 col-md-6">
-        <h6 class="text-white mb-3">Resources</h6>
+        <h6 class="text-white mb-3 fw-bold">Resources</h6>
         <ul class="list-unstyled footer-links">
           <li><a href="#">Blog</a></li>
-          <li><a href="#">Support</a></li>
+          <li><a href="#">Support Center</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Student Portal</a></li>
+          <li><a href="#">Career Opportunities</a></li>
         </ul>
       </div>
+
+      <!-- Legal -->
       <div class="col-lg-2 col-md-6">
-        <h6 class="text-white mb-3">Legal</h6>
+        <h6 class="text-white mb-3 fw-bold">Legal</h6>
         <ul class="list-unstyled footer-links">
           <li><a href="#">Privacy Policy</a></li>
           <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
           <li><a href="#">Accessibility</a></li>
+          <li><a href="#">GDPR Compliance</a></li>
         </ul>
       </div>
+
+      <!-- Contact Info -->
       <div class="col-lg-2 col-md-6">
-        <h6 class="text-white mb-3">Contact</h6>
+        <h6 class="text-white mb-3 fw-bold">Contact Us</h6>
         <ul class="list-unstyled footer-links">
-          <li><a href="tel:+44123456789">+44 123 456 789</a></li>
-          <li><a href="mailto:info@learnpac.co.uk">test@learnpac.co.uk</a></li>
-          <li class="text-white-50">123 Business Street<br>London, UK<br>SW1A 1AA</li>
+          <li class="d-flex align-items-center mb-2">
+            <i class="fas fa-phone-alt me-2"></i>
+            <a href="tel:+44123456789">+44 123 456 789</a>
+          </li>
+          <li class="d-flex align-items-center mb-2">
+            <i class="fas fa-envelope me-2"></i>
+            <a href="mailto:info@learnpac.co.uk">info@learnpac.co.uk</a>
+          </li>
+          <li class="d-flex align-items-start mb-2">
+            <i class="fas fa-map-marker-alt me-2 mt-1"></i>
+            <span>123 Business Street<br>London, UK<br>SW1A 1AA</span>
+          </li>
         </ul>
       </div>
     </div>
 
-    <div class="d-flex justify-content-between align-items-center mt-5 border-top border-secondary pt-4">
-      <div class="text-white-50">
-        &copy; 2024 LearnPac. All rights reserved.
-      </div>
-      <div class="d-flex gap-3">
-        <a href="#" class="text-white-50 text-decoration-none">Privacy</a>
-        <a href="#" class="text-white-50 text-decoration-none">Terms</a>
+    <!-- Bottom Footer -->
+    <div class="footer-bottom mt-5 pt-4 border-top border-secondary">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+          <p class="text-white-50 mb-0">&copy; 2024 LearnPac. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+          <div class="d-flex justify-content-center justify-content-md-end gap-3">
+            <a href="#" class="text-white-50 text-decoration-none">Privacy</a>
+            <a href="#" class="text-white-50 text-decoration-none">Terms</a>
+            <a href="#" class="text-white-50 text-decoration-none">Sitemap</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -243,29 +312,593 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="script/search.js"></script>
 
-<!-- AI Chat Widget -->
-<div class="chat-widget minimized" id="chatWidget">
-  <div class="chat-minimized">
-    <i class="fas fa-robot"></i>
-    <span class="notification-badge">1</span>
-  </div>
-  <div class="chat-expanded">
-    <div class="chat-header">
-      <div class="d-flex align-items-center">
-        <i class="fas fa-robot me-2"></i>
-        <span>AI Assistant</span>
+<script>
+// Enhanced Chat Widget Functionality
+const chatWidget = {
+  isOpen: false,
+  messages: [],
+  typingTimeout: null,
+  maxMessages: 50,
+  markdown: null,
+  quickReplies: [
+    "Tell me about your courses",
+    "What are your prices?",
+    "How do I get started?",
+    "I need technical support"
+  ],
+  reactions: ['👍', '❤️', '😊', '👏', '🎉'],
+
+  async init() {
+    // Load marked.js for markdown support
+    if (!this.markdown) {
+      await this.loadMarked();
+    }
+    this.bindEvents();
+    this.loadMessages();
+    
+    // Show notification badge initially
+    this.showNotification();
+  },
+
+  async loadMarked() {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+      script.onload = () => {
+        this.markdown = marked;
+        resolve();
+      };
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  },
+
+  bindEvents() {
+    const widget = document.getElementById('chatWidget');
+    const input = document.getElementById('chatInput');
+    const sendButton = document.querySelector('.chat-input button');
+    const closeButton = document.querySelector('.chat-header .btn-close');
+    const minimizedButton = document.querySelector('.chat-minimized');
+    const newChatButton = document.querySelector('.btn-new-chat');
+
+    minimizedButton?.addEventListener('click', () => this.toggleChat());
+    closeButton?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.toggleChat();
+    });
+
+    newChatButton?.addEventListener('click', () => this.startNewChat());
+
+    input?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        this.sendMessage();
+      }
+    });
+
+    sendButton?.addEventListener('click', () => this.sendMessage());
+
+    const chatExpanded = widget?.querySelector('.chat-expanded');
+    chatExpanded?.addEventListener('click', (e) => e.stopPropagation());
+  },
+
+  toggleChat() {
+    const widget = document.getElementById('chatWidget');
+    this.isOpen = !this.isOpen;
+    widget.classList.toggle('minimized');
+    
+    if (this.isOpen) {
+      this.hideNotification();
+      this.scrollToBottom();
+    }
+  },
+
+  hideNotification() {
+    const badge = document.querySelector('.notification-badge');
+    if (badge) {
+      badge.style.display = 'none';
+    }
+  },
+
+  showNotification() {
+    const badge = document.querySelector('.notification-badge');
+    if (badge) {
+      badge.style.display = 'flex';
+    }
+  },
+
+  async sendMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    
+    if (message) {
+      try {
+        // Add user message
+        this.addMessage(message, 'user');
+        input.value = '';
+        
+        // Show typing indicator
+        this.showTypingIndicator();
+        
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Remove typing indicator
+        this.removeTypingIndicator();
+        
+        // Generate and add bot response
+        const response = await this.generateResponse(message);
+        this.addMessage(response, 'bot');
+        
+        // Save messages
+        this.saveMessages();
+      } catch (error) {
+        console.error('Error sending message:', error);
+        this.addErrorMessage('Sorry, there was an error processing your message. Please try again.');
+      }
+    }
+  },
+
+  showTypingIndicator() {
+    const messages = document.getElementById('chatMessages');
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message bot';
+    typingDiv.innerHTML = `
+      <div class="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
-      <button class="btn-close btn-close-white"></button>
-    </div>
-    <div class="chat-body" id="chatBody">
-      <div class="chat-messages" id="chatMessages">
-      </div>
-      <div class="chat-input">
-        <input type="text" id="chatInput" placeholder="Type your message...">
-        <button>
-          <i class="fas fa-paper-plane"></i>
+    `;
+    messages.appendChild(typingDiv);
+    this.scrollToBottom();
+  },
+
+  removeTypingIndicator() {
+    const typingIndicator = document.querySelector('.typing-indicator');
+    if (typingIndicator) {
+      typingIndicator.parentElement.remove();
+    }
+  },
+
+  addMessage(text, type) {
+    const messages = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}`;
+    
+    // Format timestamp
+    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+    // Convert markdown to HTML if it's a bot message
+    const formattedText = type === 'bot' && this.markdown ? 
+      this.markdown.parse(text) : 
+      text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    
+    // Add message actions
+    const actions = type === 'bot' ? `
+      <div class="message-actions">
+        <button class="message-action-btn" onclick="chatWidget.copyMessage(this)">
+          <i class="fas fa-copy"></i> Copy
         </button>
+        <button class="message-action-btn" onclick="chatWidget.thumbsUp(this)">
+          <i class="fas fa-thumbs-up"></i> Helpful
+        </button>
+      </div>
+    ` : '';
+    
+    // Add quick replies for bot messages
+    const quickReplies = type === 'bot' ? this.generateQuickReplies(text) : '';
+    
+    messageDiv.innerHTML = `
+      <div class="message-content">${formattedText}</div>
+      <div class="message-timestamp">${timestamp}</div>
+      ${actions}
+      ${quickReplies}
+    `;
+    
+    messages.appendChild(messageDiv);
+    
+    this.messages.push({ 
+      text, 
+      type, 
+      timestamp: new Date().toISOString(),
+      reactions: []
+    });
+    
+    // Limit stored messages
+    if (this.messages.length > this.maxMessages) {
+      this.messages = this.messages.slice(-this.maxMessages);
+    }
+    
+    this.scrollToBottom();
+  },
+
+  generateQuickReplies(message) {
+    // Only show quick replies for certain types of messages
+    if (message.includes('How can I assist you today?') || 
+        message.includes('What would you like to know more about?')) {
+      return `
+        <div class="quick-replies">
+          ${this.quickReplies.map(reply => `
+            <button class="quick-reply-btn" onclick="chatWidget.useQuickReply('${reply}')">
+              ${reply}
+            </button>
+          `).join('')}
+        </div>
+      `;
+    }
+    return '';
+  },
+
+  useQuickReply(text) {
+    const input = document.getElementById('chatInput');
+    input.value = text;
+    this.sendMessage();
+  },
+
+  copyMessage(button) {
+    const messageContent = button.closest('.message').querySelector('.message-content');
+    const text = messageContent.textContent;
+    
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = button.innerHTML;
+      button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      setTimeout(() => {
+        button.innerHTML = originalText;
+      }, 2000);
+    });
+  },
+
+  thumbsUp(button) {
+    button.classList.toggle('active');
+    const message = button.closest('.message');
+    const messageIndex = Array.from(message.parentNode.children).indexOf(message);
+    
+    if (button.classList.contains('active')) {
+      this.messages[messageIndex].reactions.push('👍');
+    } else {
+      this.messages[messageIndex].reactions = 
+        this.messages[messageIndex].reactions.filter(r => r !== '👍');
+    }
+    
+    this.saveMessages();
+  },
+
+  addErrorMessage(text) {
+    const messages = document.getElementById('chatMessages');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.innerHTML = `
+      <i class="fas fa-exclamation-circle"></i>
+      <span>${text}</span>
+    `;
+    messages.appendChild(errorDiv);
+    this.scrollToBottom();
+  },
+
+  scrollToBottom() {
+    const messages = document.getElementById('chatMessages');
+    messages.scrollTop = messages.scrollHeight;
+  },
+
+  async generateResponse(message) {
+    // Enhanced response generation with more context and better formatting
+    const lowerMessage = message.toLowerCase();
+    
+    const responses = {
+      greeting: {
+        patterns: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening'],
+        response: "Hello! 👋 I'm LP, your AI assistant. I can help you with:\n\n" +
+                 "• Course information and pricing\n" +
+                 "• Training program details\n" +
+                 "• Technical support\n" +
+                 "• General inquiries\n\n" +
+                 "How can I assist you today?"
+      },
+      courses: {
+        patterns: ['course', 'training', 'learn', 'study', 'program'],
+        response: "We offer a wide range of courses! Here are some popular categories:\n\n" +
+                 "• Professional Certifications\n" +
+                 "• Technical Skills\n" +
+                 "• Business & Management\n" +
+                 "• Health & Safety\n\n" +
+                 "Would you like to know more about any specific category?"
+      },
+      pricing: {
+        patterns: ['price', 'cost', 'fee', 'payment', 'how much'],
+        response: "Our course prices vary based on the program and duration. Here's a general guide:\n\n" +
+                 "| Course Type | Price Range |\n" +
+                 "|------------|-------------|\n" +
+                 "| Individual courses | £50-£200 |\n" +
+                 "| Certification programs | £200-£500 |\n" +
+                 "| Corporate training | Custom pricing |\n\n" +
+                 "Would you like to see our current course catalog with detailed pricing?"
+      },
+      help: {
+        patterns: ['help', 'support', 'assist', 'trouble', 'problem'],
+        response: "I'm here to help! You can:\n\n" +
+                 "1. Ask about specific courses\n" +
+                 "2. Get pricing information\n" +
+                 "3. Learn about our training methods\n" +
+                 "4. Get technical support\n\n" +
+                 "What would you like to know more about?"
+      },
+      technical: {
+        patterns: ['technical', 'support', 'help', 'issue', 'problem'],
+        response: "For technical support, you can:\n\n" +
+                 "1. Check our [Knowledge Base](https://support.learnpac.co.uk)\n" +
+                 "2. Contact our support team at support@learnpac.co.uk\n" +
+                 "3. Call our support line at +44 123 456 789\n\n" +
+                 "What specific issue are you experiencing?"
+      }
+    };
+
+    // Check for matching patterns
+    for (const [key, data] of Object.entries(responses)) {
+      if (data.patterns.some(pattern => lowerMessage.includes(pattern))) {
+        return data.response;
+      }
+    }
+    
+    // Default response with suggestions
+    return "I understand you're interested in learning more. Here are some topics I can help with:\n\n" +
+           "• Course information and enrollment\n" +
+           "• Training program details\n" +
+           "• Pricing and payment options\n" +
+           "• Technical support\n\n" +
+           "Please let me know what specific information you need!";
+  },
+
+  saveMessages() {
+    try {
+      localStorage.setItem('chatMessages', JSON.stringify(this.messages));
+    } catch (error) {
+      console.error('Error saving messages:', error);
+      // If storage is full, remove oldest messages
+      if (error.name === 'QuotaExceededError') {
+        this.messages = this.messages.slice(-this.maxMessages);
+        this.saveMessages();
+      }
+    }
+  },
+
+  loadMessages() {
+    try {
+      const savedMessages = localStorage.getItem('chatMessages');
+      if (savedMessages) {
+        this.messages = JSON.parse(savedMessages);
+        this.messages.forEach(msg => {
+          this.addMessage(msg.text, msg.type);
+        });
+      } else {
+        // Add welcome message if no saved messages
+        const welcomeMessage = "Hi there! 👋 I'm LP, your AI assistant. I can help you with:\n\n" +
+                             "• Course information and pricing\n" +
+                             "• Training program details\n" +
+                             "• Technical support\n" +
+                             "• General inquiries\n\n" +
+                             "How can I assist you today?";
+        this.messages = [{ text: welcomeMessage, type: 'bot', timestamp: new Date().toISOString() }];
+        this.addMessage(welcomeMessage, 'bot');
+      }
+    } catch (error) {
+      console.error('Error loading messages:', error);
+      this.addErrorMessage('Error loading chat history. Starting fresh conversation.');
+    }
+  },
+
+  startNewChat() {
+    // Clear messages array
+    this.messages = [];
+    
+    // Clear chat messages container
+    const messagesContainer = document.getElementById('chatMessages');
+    if (messagesContainer) {
+      messagesContainer.innerHTML = '';
+    }
+    
+    // Add welcome message
+    const welcomeMessage = "Hi there! 👋 I'm LP, your AI assistant. I can help you with:\n\n" +
+                         "• Course information and pricing\n" +
+                         "• Training program details\n" +
+                         "• Technical support\n" +
+                         "• General inquiries\n\n" +
+                         "How can I assist you today?";
+    
+    this.messages.push({ 
+      text: welcomeMessage, 
+      type: 'bot', 
+      timestamp: new Date().toISOString() 
+    });
+    
+    this.addMessage(welcomeMessage, 'bot');
+    
+    // Save empty chat history
+    this.saveMessages();
+    
+    // Show success message
+    this.addSystemMessage('New chat started');
+  },
+
+  addSystemMessage(text) {
+    const messages = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'system-message';
+    messageDiv.innerHTML = `
+      <div class="message-content">${text}</div>
+    `;
+    messages.appendChild(messageDiv);
+    this.scrollToBottom();
+  }
+};
+
+// Initialize chat widget when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  chatWidget.init();
+});
+
+// Add cart functionality
+let cart = [];
+
+// Load cart from server
+async function loadCart() {
+    try {
+        const response = await fetch('data/cart_operations.php?action=get_cart');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Server did not return JSON');
+        }
+        const data = await response.json();
+        
+        if (data.success) {
+            cart = data.cart;
+            updateCartCount();
+            displayCart();
+        } else {
+            console.warn('Cart data not in expected format:', data);
+            cart = [];
+            updateCartCount();
+            displayCart();
+        }
+    } catch (error) {
+        console.error('Error loading cart:', error);
+        // Initialize empty cart on error
+        cart = [];
+        updateCartCount();
+        displayCart();
+    }
+}
+
+// Display cart items
+function displayCart() {
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    
+    if (!cartItems || !cartTotal) return;
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = `
+            <div class="empty-cart text-center py-4">
+                <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                <p class="text-muted">Your cart is empty</p>
+            </div>
+        `;
+        cartTotal.textContent = '0.00';
+        return;
+    }
+
+    let total = 0;
+    cartItems.innerHTML = '';
+
+    cart.forEach(item => {
+        total += item.price;
+        cartItems.innerHTML += `
+            <div class="cart-item d-flex align-items-center p-3 border-bottom">
+                <img src="${item.image}" alt="${item.title}" class="cart-item-image me-3" 
+                     onerror="this.src='https://placehold.co/50x50?text=${encodeURIComponent(item.title)}'">
+                <div class="cart-item-info flex-grow-1">
+                    <h6 class="cart-item-title mb-1">${item.title}</h6>
+                    <div class="cart-item-price text-primary">£${item.price.toFixed(2)}</div>
+                </div>
+                <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${item.id})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+    });
+
+    cartTotal.textContent = total.toFixed(2);
+}
+
+// Remove from cart
+async function removeFromCart(courseId) {
+    try {
+        const response = await fetch('data/cart_operations.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'remove',
+                course_id: courseId
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            await loadCart(); // Reload cart after removing item
+        } else {
+            throw new Error(data.error || 'Failed to remove item from cart');
+        }
+    } catch (error) {
+        console.error('Error removing from cart:', error);
+        alert('Failed to remove item from cart. Please try again.');
+    }
+}
+
+// Update cart count in navbar
+function updateCartCount() {
+    const cartCount = document.querySelector('.cart-count');
+    if (cartCount) {
+        cartCount.textContent = cart.length;
+    }
+}
+
+// Checkout function
+function checkout() {
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    alert('Thank you for your purchase! This is a demo, so no actual payment will be processed.');
+    cart = [];
+    updateCartCount();
+    const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+    cartModal.hide();
+}
+
+// Initialize cart when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadCart();
+    
+    // Setup cart button click handler
+    const cartBtn = document.querySelector('.cart-btn');
+    if (cartBtn) {
+        cartBtn.addEventListener('click', () => {
+            displayCart();
+            const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+            cartModal.show();
+        });
+    }
+});
+</script>
+
+<!-- Add Cart Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Shopping Cart</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="cartItems">
+          <!-- Cart items will be dynamically loaded here -->
+        </div>
+        <div class="text-end mt-3">
+          <h5>Total: £<span id="cartTotal">0.00</span></h5>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button>
       </div>
     </div>
   </div>
@@ -530,23 +1163,19 @@
   }
 }
 
-/* Chat Widget Styles */
+/* Ensure chat widget is visible */
 .chat-widget {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 1000;
-  transition: all 0.3s ease;
-}
-
-.chat-widget.minimized .chat-expanded {
-  display: none;
+  z-index: 9999; /* Increased z-index to ensure visibility */
+  display: block !important; /* Force display */
 }
 
 .chat-minimized {
   width: 60px;
   height: 60px;
-  background: #007bff;
+  background: linear-gradient(135deg, #007bff, #0056b3);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -554,6 +1183,45 @@
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   position: relative;
+  transition: transform 0.3s ease;
+}
+
+.chat-minimized i {
+  color: white;
+  font-size: 24px;
+}
+
+.chat-widget.minimized .chat-expanded {
+  display: none;
+}
+
+.chat-widget:not(.minimized) .chat-minimized {
+  display: none;
+}
+
+/* Enhanced Chat Widget Styles */
+.chat-widget.minimized .chat-expanded {
+  display: none;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.chat-minimized {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.chat-minimized:hover {
+  transform: scale(1.05);
 }
 
 .chat-minimized i {
@@ -574,6 +1242,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
 .chat-expanded {
@@ -584,10 +1259,13 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .chat-header {
-  background: #007bff;
+  background: linear-gradient(135deg, #007bff, #0056b3);
   color: white;
   padding: 15px;
   border-radius: 12px 12px 0 0;
@@ -601,18 +1279,49 @@
   display: flex;
   flex-direction: column;
   padding: 15px;
+  background: #f8f9fa;
+  height: calc(100% - 60px); /* Subtract header height */
+  overflow: hidden; /* Prevent double scrollbars */
 }
 
 .chat-messages {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 15px;
+  padding: 10px;
+  height: 100%; /* Ensure full height */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Add scrollbar styling */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .message {
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
+  animation: messageSlide 0.3s ease;
+}
+
+@keyframes messageSlide {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .message.user {
@@ -625,38 +1334,49 @@
 
 .message-content {
   max-width: 80%;
-  padding: 10px 15px;
+  padding: 12px 16px;
   border-radius: 15px;
   font-size: 14px;
-  line-height: 1.4;
+  line-height: 1.5;
+  position: relative;
 }
 
 .message.user .message-content {
-  background: #007bff;
+  background: linear-gradient(135deg, #007bff, #0056b3);
   color: white;
   border-radius: 15px 15px 0 15px;
 }
 
 .message.bot .message-content {
-  background: #f0f2f5;
+  background: white;
   color: #333;
   border-radius: 15px 15px 15px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.message-timestamp {
+  font-size: 11px;
+  color: #666;
+  margin-top: 4px;
+  opacity: 0.8;
 }
 
 .chat-input {
   display: flex;
   gap: 10px;
   padding: 10px;
-  background: #f8f9fa;
+  background: white;
   border-radius: 12px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
 }
 
 .chat-input input {
   flex: 1;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #dee2e6;
   border-radius: 8px;
   font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 .chat-input input:focus {
@@ -666,33 +1386,39 @@
 }
 
 .chat-input button {
-  background: #007bff;
+  background: linear-gradient(135deg, #007bff, #0056b3);
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 10px 15px;
+  padding: 12px 20px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .chat-input button:hover {
-  background: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,123,255,0.2);
 }
 
-/* Loading animation for bot messages */
+.chat-input button:active {
+  transform: translateY(0);
+}
+
+/* Enhanced typing indicator */
 .typing-indicator {
   display: flex;
   gap: 4px;
-  padding: 10px 15px;
-  background: #f0f2f5;
+  padding: 12px 16px;
+  background: white;
   border-radius: 15px;
   width: fit-content;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .typing-indicator span {
   width: 8px;
   height: 8px;
-  background: #666;
+  background: #007bff;
   border-radius: 50%;
   animation: typing 1s infinite ease-in-out;
 }
@@ -704,352 +1430,437 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
 }
-</style>
 
-<script>
-// Chat Widget Functionality
-const chatWidget = {
-  isOpen: false,
-  messages: [],
-  typingTimeout: null,
+/* Markdown styling */
+.message-content p {
+  margin: 0 0 10px 0;
+}
 
-  init() {
-    this.bindEvents();
-    this.loadMessages();
-  },
+.message-content p:last-child {
+  margin-bottom: 0;
+}
 
-  bindEvents() {
-    const widget = document.getElementById('chatWidget');
-    const input = document.getElementById('chatInput');
-    const sendButton = document.querySelector('.chat-input button');
-    const closeButton = document.querySelector('.chat-header .btn-close');
-    const minimizedButton = document.querySelector('.chat-minimized');
+.message-content code {
+  background: rgba(0,0,0,0.1);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: monospace;
+}
 
-    // Handle minimized button click
-    minimizedButton.addEventListener('click', () => {
-      this.toggleChat();
-    });
+.message-content pre {
+  background: rgba(0,0,0,0.1);
+  padding: 10px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 10px 0;
+}
 
-    // Handle close button click
-    if (closeButton) {
-      closeButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        this.toggleChat();
-      });
-    }
+.message-content ul, .message-content ol {
+  margin: 10px 0;
+  padding-left: 20px;
+}
 
-    // Handle input events
-    input.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        this.sendMessage();
-      }
-    });
+.message-content li {
+  margin: 5px 0;
+}
 
-    // Handle send button click
-    sendButton.addEventListener('click', () => {
-      this.sendMessage();
-    });
+/* Error message styling */
+.error-message {
+  background: #fff3f3;
+  color: #dc3545;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-    // Prevent clicks inside the chat from closing it
-    const chatExpanded = widget.querySelector('.chat-expanded');
-    if (chatExpanded) {
-      chatExpanded.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    }
-  },
+.error-message i {
+  font-size: 16px;
+}
 
-  toggleChat() {
-    const widget = document.getElementById('chatWidget');
-    this.isOpen = !this.isOpen;
-    widget.classList.toggle('minimized');
-    
-    if (this.isOpen) {
-      this.hideNotification();
-      this.scrollToBottom();
-    }
-  },
+/* Additional Chat Widget Styles */
+.message-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
 
-  hideNotification() {
-    const badge = document.querySelector('.notification-badge');
-    if (badge) {
-      badge.style.display = 'none';
-    }
-  },
+.message:hover .message-actions {
+  opacity: 1;
+}
 
-  showNotification() {
-    const badge = document.querySelector('.notification-badge');
-    if (badge) {
-      badge.style.display = 'flex';
-    }
-  },
+.message-action-btn {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
-  async sendMessage() {
-    const input = document.getElementById('chatInput');
-    const message = input.value.trim();
-    
-    if (message) {
-      // Add user message
-      this.addMessage(message, 'user');
-      input.value = '';
-      
-      // Show typing indicator
-      this.showTypingIndicator();
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Remove typing indicator
-      this.removeTypingIndicator();
-      
-      // Generate and add bot response
-      const response = this.generateResponse(message);
-      this.addMessage(response, 'bot');
-      
-      // Save messages
-      this.saveMessages();
-    }
-  },
+.message-action-btn:hover {
+  background: rgba(0,0,0,0.05);
+  color: #007bff;
+}
 
-  showTypingIndicator() {
-    const messages = document.getElementById('chatMessages');
-    const typingDiv = document.createElement('div');
-    typingDiv.className = 'message bot';
-    typingDiv.innerHTML = `
-      <div class="typing-indicator">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    `;
-    messages.appendChild(typingDiv);
-    this.scrollToBottom();
-  },
+.quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
 
-  removeTypingIndicator() {
-    const typingIndicator = document.querySelector('.typing-indicator');
-    if (typingIndicator) {
-      typingIndicator.parentElement.remove();
-    }
-  },
+.quick-reply-btn {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 15px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
-  addMessage(text, type) {
-    const messages = document.getElementById('chatMessages');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${type}`;
-    messageDiv.innerHTML = `<div class="message-content">${text}</div>`;
-    messages.appendChild(messageDiv);
-    
-    this.messages.push({ text, type, timestamp: new Date().toISOString() });
-    this.scrollToBottom();
-  },
+.quick-reply-btn:hover {
+  background: #f8f9fa;
+  border-color: #007bff;
+  color: #007bff;
+}
 
-  scrollToBottom() {
-    const messages = document.getElementById('chatMessages');
-    messages.scrollTop = messages.scrollHeight;
-  },
+.message-reactions {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
 
-  generateResponse(message) {
-    // Simple response generation based on keywords
-    const lowerMessage = message.toLowerCase();
-    
-    if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-      return "Hello! I'm LP, your AI assistant. How can I help you with our courses today?";
-    }
-    
-    if (lowerMessage.includes('course') || lowerMessage.includes('training')) {
-      return "We offer a wide range of courses! Would you like to know about our most popular courses or do you have a specific topic in mind?";
-    }
-    
-    if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
-      return "Our course prices vary depending on the program. Would you like me to show you our current course catalog with pricing?";
-    }
-    
-    if (lowerMessage.includes('help')) {
-      return "I'm here to help! You can ask me about our courses, pricing, or how to get started. What would you like to know?";
-    }
-    
-    // Default response
-    return "I understand you're interested in learning more. Could you please provide more details about what you'd like to know? I'm here to help guide you through our training programs.";
-  },
+.reaction-btn {
+  background: none;
+  border: none;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
-  saveMessages() {
-    localStorage.setItem('chatMessages', JSON.stringify(this.messages));
-  },
+.reaction-btn:hover {
+  background: rgba(0,0,0,0.05);
+}
 
-  loadMessages() {
-    const savedMessages = localStorage.getItem('chatMessages');
-    if (savedMessages) {
-      this.messages = JSON.parse(savedMessages);
-      this.messages.forEach(msg => {
-        this.addMessage(msg.text, msg.type);
-      });
-    } else {
-      // Add welcome message if no saved messages
-      const welcomeMessage = "Hi there! I'm LP, your AI assistant. How can I help you today?";
-      this.messages = [{ text: welcomeMessage, type: 'bot', timestamp: new Date().toISOString() }];
-      this.addMessage(welcomeMessage, 'bot');
-    }
+.reaction-btn.active {
+  background: rgba(0,123,255,0.1);
+  color: #007bff;
+}
+
+/* Loading animation */
+.loading-dots {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.loading-dots span {
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 50%;
+  animation: loadingDots 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loadingDots {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+/* Message status indicators */
+.message-status {
+  font-size: 11px;
+  color: #666;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.message-status i {
+  font-size: 10px;
+}
+
+/* Enhanced message content */
+.message-content {
+  position: relative;
+}
+
+.message-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+}
+
+.message-content:hover::before {
+  opacity: 0.05;
+  background: currentColor;
+}
+
+/* Code block styling */
+.message-content pre {
+  background: rgba(0,0,0,0.05);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 10px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.message-content code {
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+}
+
+/* Link styling */
+.message-content a {
+  color: #007bff;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.message-content a:hover {
+  border-bottom-color: currentColor;
+}
+
+/* List styling */
+.message-content ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.message-content ul li {
+  position: relative;
+  padding-left: 20px;
+  margin: 8px 0;
+}
+
+.message-content ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #007bff;
+}
+
+/* Table styling */
+.message-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 13px;
+}
+
+.message-content th,
+.message-content td {
+  padding: 8px;
+  border: 1px solid #dee2e6;
+  text-align: left;
+}
+
+.message-content th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+/* Blockquote styling */
+.message-content blockquote {
+  border-left: 3px solid #007bff;
+  margin: 10px 0;
+  padding: 10px 15px;
+  background: rgba(0,123,255,0.05);
+  border-radius: 0 8px 8px 0;
+}
+
+/* Horizontal rule */
+.message-content hr {
+  border: none;
+  border-top: 1px solid #dee2e6;
+  margin: 15px 0;
+}
+
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-new-chat {
+  background: none;
+  border: none;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-new-chat:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.btn-new-chat i {
+  font-size: 14px;
+}
+
+.system-message {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.system-message .message-content {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.05);
+  color: #666;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+/* Enhanced Footer Styles */
+.footer-dark {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-dark::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #007bff, #00d2ff);
+}
+
+.newsletter-section {
+  position: relative;
+  padding: 3rem 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  margin-bottom: 3rem;
+}
+
+.newsletter-form .form-control {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px 0 0 8px;
+}
+
+.newsletter-form .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter-form .btn-brand {
+  padding: 0.8rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  font-weight: 500;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background: #007bff;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.footer-links li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.footer-links a:hover {
+  color: #fff;
+  transform: translateX(5px);
+}
+
+.footer-links i {
+  color: #007bff;
+  font-size: 0.9rem;
+}
+
+.footer-bottom {
+  position: relative;
+}
+
+.footer-bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+@media (max-width: 768px) {
+  .newsletter-section {
+    padding: 2rem 1rem;
   }
-};
-
-// Initialize chat widget when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  chatWidget.init();
-});
-
-// Add cart functionality
-let cart = [];
-
-// Load cart from server
-async function loadCart() {
-    try {
-        const response = await fetch('data/cart_operations.php?action=get_cart');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-            throw new Error('Server did not return JSON');
-        }
-        const data = await response.json();
-        
-        if (data.success) {
-            cart = data.cart;
-            updateCartCount();
-            displayCart();
-        } else {
-            console.warn('Cart data not in expected format:', data);
-            cart = [];
-            updateCartCount();
-            displayCart();
-        }
-    } catch (error) {
-        console.error('Error loading cart:', error);
-        // Initialize empty cart on error
-        cart = [];
-        updateCartCount();
-        displayCart();
-    }
+  
+  .newsletter-form .input-group {
+    flex-direction: column;
+  }
+  
+  .newsletter-form .btn-brand {
+    border-radius: 8px;
+    margin-top: 1rem;
+  }
+  
+  .footer-links {
+    margin-bottom: 2rem;
+  }
 }
-
-// Display cart items
-function displayCart() {
-    const cartItems = document.getElementById('cartItems');
-    const cartTotal = document.getElementById('cartTotal');
-    
-    if (!cartItems || !cartTotal) return;
-    
-    if (cart.length === 0) {
-        cartItems.innerHTML = `
-            <div class="empty-cart">
-                <i class="fas fa-shopping-cart"></i>
-                <p>Your cart is empty</p>
-            </div>
-        `;
-        cartTotal.textContent = '0.00';
-        return;
-    }
-
-    let total = 0;
-    cartItems.innerHTML = '';
-
-    cart.forEach(item => {
-        total += item.price;
-        cartItems.innerHTML += `
-            <div class="cart-item">
-                <img src="${item.image}" alt="${item.title}" onerror="this.src='https://placehold.co/50x50?text=${encodeURIComponent(item.title)}'">
-                <div class="cart-item-info">
-                    <div class="cart-item-title">${item.title}</div>
-                    <div class="cart-item-price">£${item.price.toFixed(2)}</div>
-                </div>
-                <button class="cart-item-remove" onclick="removeFromCart(${item.id})">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        `;
-    });
-
-    cartTotal.textContent = total.toFixed(2);
-}
-
-// Remove from cart
-async function removeFromCart(courseId) {
-    try {
-        const response = await fetch(`data/cart_operations.php?action=remove_from_cart&courseId=${courseId}`, {
-            method: 'DELETE'
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            await loadCart(); // Reload cart after removing item
-        }
-    } catch (error) {
-        console.error('Error removing from cart:', error);
-    }
-}
-
-// Update cart count in navbar
-function updateCartCount() {
-    const cartCount = document.querySelector('.cart-count');
-    if (cartCount) {
-        cartCount.textContent = cart.length;
-    }
-}
-
-// Checkout function
-function checkout() {
-    if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-    }
-    alert('Thank you for your purchase! This is a demo, so no actual payment will be processed.');
-    cart = [];
-    updateCartCount();
-    const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
-    cartModal.hide();
-}
-
-// Initialize cart when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    loadCart();
-    
-    // Setup cart button click handler
-    const cartBtn = document.querySelector('.cart-btn');
-    if (cartBtn) {
-        cartBtn.addEventListener('click', () => {
-            displayCart();
-            const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
-            cartModal.show();
-        });
-    }
-});
-</script>
-
-<!-- Add Cart Modal -->
-<div class="modal fade" id="cartModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Shopping Cart</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <div id="cartItems">
-          <!-- Cart items will be dynamically loaded here -->
-        </div>
-        <div class="text-end mt-3">
-          <h5>Total: £<span id="cartTotal">0.00</span></h5>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button>
-      </div>
-    </div>
-  </div>
-</div>
+</style>
 </body>
 </html>

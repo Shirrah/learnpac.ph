@@ -153,6 +153,12 @@ let cart = [];
 // Load courses from database
 async function loadCourses(searchTerm = '') {
     try {
+        // Get search term from URL if not provided
+        if (!searchTerm) {
+            const urlParams = new URLSearchParams(window.location.search);
+            searchTerm = urlParams.get('search') || '';
+        }
+
         const url = searchTerm 
             ? `../data/search_courses.php?q=${encodeURIComponent(searchTerm)}`
             : '../data/get_courses.php';

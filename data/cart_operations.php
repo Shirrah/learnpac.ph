@@ -4,8 +4,14 @@ session_start();
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, DELETE');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
+
+// Handle preflight requests
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 // Database configuration
 $host = 'sql12.freesqldatabase.com';
@@ -15,84 +21,108 @@ $password = 'qEJaU42yQ4';
 $port = 3306;
 
 try {
+    // Create connection
     $conn = new mysqli($host, $username, $password, $dbname, $port);
 
+    // Check connection
     if ($conn->connect_error) {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }
 
-    // Get the request method and action
-    $method = $_SERVER['REQUEST_METHOD'];
-    $action = isset($_GET['action']) ? $_GET['action'] : '';
-
-    switch ($method) {
-        case 'GET':
-            if ($action === 'get_cart') {
-                // Get cart items from session
-                $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
-                echo json_encode(['success' => true, 'cart' => $cart]);
-            }
-            break;
-
-        case 'POST':
-            $data = json_decode(file_get_contents('php://input'), true);
-            
-            if ($action === 'add_to_cart') {
-                if (!isset($_SESSION['cart'])) {
-                    $_SESSION['cart'] = [];
-                }
-                
-                // Get course details from database
-                $courseId = $data['courseId'];
-                $stmt = $conn->prepare("SELECT * FROM courses WHERE id = ?");
-                $stmt->bind_param("i", $courseId);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $course = $result->fetch_assoc();
-                
-                if ($course) {
-                    // Check if course is already in cart
-                    $courseExists = false;
-                    foreach ($_SESSION['cart'] as $item) {
-                        if ($item['id'] == $courseId) {
-                            $courseExists = true;
-                            break;
-                        }
-                    }
-                    
-                    if (!$courseExists) {
-                        $_SESSION['cart'][] = [
-                            'id' => $course['id'],
-                            'title' => $course['title'],
-                            'price' => floatval($course['price']),
-                            'image' => $course['image']
-                        ];
-                        echo json_encode(['success' => true, 'message' => 'Course added to cart']);
-                    } else {
-                        echo json_encode(['success' => false, 'message' => 'Course already in cart']);
-                    }
-                } else {
-                    throw new Exception("Course not found");
-                }
-            }
-            break;
-
-        case 'DELETE':
-            if ($action === 'remove_from_cart') {
-                $courseId = $_GET['courseId'];
-                
-                if (isset($_SESSION['cart'])) {
-                    $_SESSION['cart'] = array_filter($_SESSION['cart'], function($item) use ($courseId) {
-                        return $item['id'] != $courseId;
-                    });
-                    echo json_encode(['success' => true, 'message' => 'Course removed from cart']);
-                }
-            }
-            break;
+    // Initialize cart if not exists
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
     }
 
+    $response = array('success' => false);
+
+    // Handle GET request for cart contents
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'get_cart') {
+        $cart_items = array();
+        
+        if (!empty($_SESSION['cart'])) {
+            // Get course details for each item in cart
+            $placeholders = str_repeat('?,', count($_SESSION['cart']) - 1) . '?';
+            $stmt = $conn->prepare("SELECT id, title, price, image FROM courses WHERE id IN ($placeholders)");
+            $stmt->bind_param(str_repeat('i', count($_SESSION['cart'])), ...$_SESSION['cart']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+                $cart_items[] = array(
+                    'id' => $row['id'],
+                    'title' => $row['title'],
+                    'price' => floatval($row['price']),
+                    'image' => $row['image']
+                );
+            }
+        }
+        
+        echo json_encode([
+            'success' => true,
+            'cart' => $cart_items
+        ]);
+        exit();
+    }
+
+    // Handle POST requests
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        if (!isset($data['action']) || !isset($data['course_id'])) {
+            throw new Exception('Missing required parameters');
+        }
+
+        switch ($data['action']) {
+            case 'add':
+                // Check if course exists
+                $stmt = $conn->prepare("SELECT id FROM courses WHERE id = ?");
+                $stmt->bind_param("i", $data['course_id']);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows === 0) {
+                    throw new Exception('Course not found');
+                }
+
+                // Add course to cart if not already present
+                if (!in_array($data['course_id'], $_SESSION['cart'])) {
+                    $_SESSION['cart'][] = $data['course_id'];
+                    $response['message'] = 'Course added to cart';
+                } else {
+                    $response['message'] = 'Course already in cart';
+                }
+
+                $response['success'] = true;
+                $response['cart_count'] = count($_SESSION['cart']);
+                break;
+
+            case 'remove':
+                // Remove course from cart
+                $key = array_search($data['course_id'], $_SESSION['cart']);
+                if ($key !== false) {
+                    unset($_SESSION['cart'][$key]);
+                    $_SESSION['cart'] = array_values($_SESSION['cart']); // Reindex array
+                    $response['message'] = 'Course removed from cart';
+                } else {
+                    $response['message'] = 'Course not found in cart';
+                }
+                $response['success'] = true;
+                $response['cart_count'] = count($_SESSION['cart']);
+                break;
+
+            default:
+                throw new Exception('Invalid action');
+        }
+    }
+
+    echo json_encode($response);
+
 } catch (Exception $e) {
-    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+    ]);
 } finally {
     if (isset($conn)) {
         $conn->close();

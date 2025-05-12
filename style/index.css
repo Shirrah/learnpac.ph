@@ -63,6 +63,7 @@ color: #fff;
 font-size: 0.7rem;
 border-radius: 50%;
 padding: 0.25em 0.5em;
+transition: transform 0.3s ease;
 }
 .search-input {
 width: 40px;
@@ -328,4 +329,284 @@ pointer-events: auto;
   .feature-icon i {
     font-size: 1.5rem !important;
   }
+}
+
+/* Search Results Dropdown */
+.search-results-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-top: 0.5rem;
+    z-index: 1000;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+}
+
+.search-results-content {
+    padding: 0.5rem;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.8rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    gap: 1rem;
+}
+
+.search-result-item:hover {
+    background-color: #f8f9fa;
+}
+
+.search-result-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.search-result-item .course-info {
+    flex-grow: 1;
+    min-width: 0; /* Prevent flex item from overflowing */
+}
+
+.search-result-item .course-title {
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.search-result-item .course-description {
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.search-result-item .course-price {
+    color: #28a745;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.search-result-item .add-to-cart-btn {
+    padding: 0.5rem 1rem;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.search-result-item .add-to-cart-btn:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+}
+
+/* Highlighted text in search results */
+.search-result-item mark {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 0.1em 0.2em;
+    border-radius: 2px;
+    font-weight: 500;
+}
+
+/* Loading Animation */
+.search-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.search-loading::after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 2px solid #007bff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    margin-left: 0.5rem;
+    animation: spin 0.8s linear infinite;
+}
+
+/* No Results Styling */
+.no-results {
+    text-align: center;
+    padding: 1.5rem;
+    color: #666;
+}
+
+.no-results i {
+    font-size: 2rem;
+    color: #ddd;
+    margin-bottom: 0.5rem;
+}
+
+.no-results p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Alert Messages */
+.alert {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    animation: slideIn 0.3s ease;
+}
+
+.alert i {
+    margin-right: 0.5rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.alert.m-2 {
+    margin: 0.5rem;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Cart Styles */
+.cart-item {
+    transition: background-color 0.2s ease;
+}
+
+.cart-item:hover {
+    background-color: #f8f9fa;
+}
+
+.cart-item-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.cart-item-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+}
+
+.cart-item-price {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.empty-cart {
+    color: #6c757d;
+}
+
+.empty-cart i {
+    opacity: 0.5;
+}
+
+/* Cart Modal */
+.modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+/* Cart Count Animation */
+.cart-count-update {
+    animation: cartCountUpdate 0.3s ease;
+}
+
+@keyframes cartCountUpdate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* Add to Cart Button States */
+.add-to-cart-btn {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.add-to-cart-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.add-to-cart-btn.added-to-cart {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.add-to-cart-btn.in-cart {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+
+.add-to-cart-btn .fa-spinner {
+    animation: spin 1s linear infinite;
 }
