@@ -246,7 +246,7 @@
 
 <!-- AI Chat Widget -->
 <div class="chat-widget minimized" id="chatWidget">
-  <div class="chat-minimized" onclick="toggleChat()">
+  <div class="chat-minimized">
     <i class="fas fa-robot"></i>
     <span class="notification-badge">1</span>
   </div>
@@ -256,14 +256,14 @@
         <i class="fas fa-robot me-2"></i>
         <span>AI Assistant</span>
       </div>
-      <button class="btn-close btn-close-white" onclick="toggleChat()"></button>
+      <button class="btn-close btn-close-white"></button>
     </div>
     <div class="chat-body" id="chatBody">
       <div class="chat-messages" id="chatMessages">
       </div>
       <div class="chat-input">
-        <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
-        <button onclick="sendMessage()">
+        <input type="text" id="chatInput" placeholder="Type your message...">
+        <button>
           <i class="fas fa-paper-plane"></i>
         </button>
       </div>
@@ -722,22 +722,42 @@ const chatWidget = {
     const widget = document.getElementById('chatWidget');
     const input = document.getElementById('chatInput');
     const sendButton = document.querySelector('.chat-input button');
+    const closeButton = document.querySelector('.chat-header .btn-close');
+    const minimizedButton = document.querySelector('.chat-minimized');
 
-    widget.addEventListener('click', (e) => {
-      if (e.target.closest('.chat-minimized')) {
-        this.toggleChat();
-      }
+    // Handle minimized button click
+    minimizedButton.addEventListener('click', () => {
+      this.toggleChat();
     });
 
+    // Handle close button click
+    if (closeButton) {
+      closeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.toggleChat();
+      });
+    }
+
+    // Handle input events
     input.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         this.sendMessage();
       }
     });
 
+    // Handle send button click
     sendButton.addEventListener('click', () => {
       this.sendMessage();
     });
+
+    // Prevent clicks inside the chat from closing it
+    const chatExpanded = widget.querySelector('.chat-expanded');
+    if (chatExpanded) {
+      chatExpanded.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
   },
 
   toggleChat() {
@@ -886,15 +906,31 @@ let cart = [];
 async function loadCart() {
     try {
         const response = await fetch('data/cart_operations.php?action=get_cart');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Server did not return JSON');
+        }
         const data = await response.json();
         
         if (data.success) {
             cart = data.cart;
             updateCartCount();
             displayCart();
+        } else {
+            console.warn('Cart data not in expected format:', data);
+            cart = [];
+            updateCartCount();
+            displayCart();
         }
     } catch (error) {
         console.error('Error loading cart:', error);
+        // Initialize empty cart on error
+        cart = [];
+        updateCartCount();
+        displayCart();
     }
 }
 
