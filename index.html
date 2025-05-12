@@ -204,22 +204,26 @@
   <div class="container">
     <!-- Newsletter Section -->
     <div class="newsletter-section text-center mb-5">
-      <h2 class="fw-bold text-white mb-3">Stay Updated with LearnPac</h2>
-      <p class="text-white-50 mb-4">Subscribe to our newsletter for the latest courses, updates, and exclusive offers.</p>
-      <form class="newsletter-form d-flex justify-content-center gap-2">
-        <div class="input-group" style="max-width: 500px;">
-          <input type="email" class="form-control" placeholder="Enter your email address">
-          <button class="btn btn-brand">Subscribe</button>
-        </div>
-      </form>
+      <div class="newsletter-content">
+        <h2 class="fw-bold text-white mb-3">Stay Updated with LearnPac</h2>
+        <p class="text-white-50 mb-4">Subscribe to our newsletter for the latest courses, updates, and exclusive offers.</p>
+        <form class="newsletter-form d-flex justify-content-center gap-2">
+          <div class="input-group" style="max-width: 500px;">
+            <input type="email" class="form-control" placeholder="Enter your email address">
+            <button class="btn btn-brand">Subscribe</button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <!-- Main Footer Content -->
     <div class="row g-4">
       <!-- Company Info -->
       <div class="col-lg-4 col-md-6">
-        <img src="./assets/images/lplogo.png" alt="LearnPac Logo" class="mb-4" width="150">
-        <p class="text-white-50 mb-4">Empowering organizations with accredited online training solutions and professional qualifications. Join thousands of learners worldwide.</p>
+        <div class="footer-brand mb-4">
+          <img src="./assets/images/lplogo.png" alt="LearnPac Logo" class="mb-3" width="150">
+          <p class="text-white-50">Empowering organizations with accredited online training solutions and professional qualifications. Join thousands of learners worldwide.</p>
+        </div>
         <div class="social-icons d-flex gap-3 mb-4">
           <a href="#" class="social-icon" aria-label="Facebook">
             <i class="fab fa-facebook-f"></i>
@@ -238,71 +242,78 @@
 
       <!-- Quick Links -->
       <div class="col-lg-2 col-md-6">
-        <h6 class="text-white mb-3 fw-bold">Quick Links</h6>
+        <h6 class="text-white mb-3 fw-bold footer-heading">Quick Links</h6>
         <ul class="list-unstyled footer-links">
-          <li><a href="?content=Home">Home</a></li>
-          <li><a href="?content=About">About Us</a></li>
-          <li><a href="?content=Services">Services</a></li>
-          <li><a href="?content=Courses">Courses</a></li>
-          <li><a href="?content=Contacts">Contact</a></li>
+          <li><a href="?content=Home"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="?content=About"><i class="fas fa-chevron-right"></i> About Us</a></li>
+          <li><a href="?content=Services"><i class="fas fa-chevron-right"></i> Services</a></li>
+          <li><a href="?content=Courses"><i class="fas fa-chevron-right"></i> Courses</a></li>
+          <li><a href="?content=Contacts"><i class="fas fa-chevron-right"></i> Contact</a></li>
         </ul>
       </div>
 
       <!-- Resources -->
       <div class="col-lg-2 col-md-6">
-        <h6 class="text-white mb-3 fw-bold">Resources</h6>
+        <h6 class="text-white mb-3 fw-bold footer-heading">Resources</h6>
         <ul class="list-unstyled footer-links">
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Support Center</a></li>
-          <li><a href="#">FAQs</a></li>
-          <li><a href="#">Student Portal</a></li>
-          <li><a href="#">Career Opportunities</a></li>
-        </ul>
-      </div>
-
-      <!-- Legal -->
-      <div class="col-lg-2 col-md-6">
-        <h6 class="text-white mb-3 fw-bold">Legal</h6>
-        <ul class="list-unstyled footer-links">
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Cookie Policy</a></li>
-          <li><a href="#">Accessibility</a></li>
-          <li><a href="#">GDPR Compliance</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Support Center</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Student Portal</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Career Opportunities</a></li>
         </ul>
       </div>
 
       <!-- Contact Info -->
-      <div class="col-lg-2 col-md-6">
-        <h6 class="text-white mb-3 fw-bold">Contact Us</h6>
-        <ul class="list-unstyled footer-links">
-          <li class="d-flex align-items-center mb-2">
-            <i class="fas fa-phone-alt me-2"></i>
-            <a href="tel:+44123456789">+44 123 456 789</a>
+      <div class="col-lg-4 col-md-6">
+        <h6 class="text-white mb-3 fw-bold footer-heading">Contact Us</h6>
+        <ul class="list-unstyled footer-links contact-info">
+          <li class="d-flex align-items-center mb-3">
+            <div class="contact-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="contact-details">
+              <span class="text-white-50 d-block">Phone</span>
+              <a href="tel:+44123456789">+44 123 456 789</a>
+            </div>
           </li>
-          <li class="d-flex align-items-center mb-2">
-            <i class="fas fa-envelope me-2"></i>
-            <a href="mailto:info@learnpac.co.uk">info@learnpac.co.uk</a>
+          <li class="d-flex align-items-center mb-3">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-details">
+              <span class="text-white-50 d-block">Email</span>
+              <a href="mailto:info@learnpac.co.uk">info@learnpac.co.uk</a>
+            </div>
           </li>
-          <li class="d-flex align-items-start mb-2">
-            <i class="fas fa-map-marker-alt me-2 mt-1"></i>
-            <span>123 Business Street<br>London, UK<br>SW1A 1AA</span>
+          <li class="d-flex align-items-start mb-3">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-details">
+              <span class="text-white-50 d-block">Address</span>
+              <span>123 Business Street<br>London, UK<br>SW1A 1AA</span>
+            </div>
           </li>
         </ul>
       </div>
     </div>
 
     <!-- Bottom Footer -->
-    <div class="footer-bottom mt-5 pt-4 border-top border-secondary">
+    <div class="footer-bottom mt-5 pt-4">
       <div class="row align-items-center">
         <div class="col-md-6 text-center text-md-start">
           <p class="text-white-50 mb-0">&copy; 2024 LearnPac. All rights reserved.</p>
+          <div class="visitor-counter mt-2">
+            <i class="fas fa-eye"></i>
+            <span id="visitCount">0</span> visitors
+          </div>
         </div>
         <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
           <div class="d-flex justify-content-center justify-content-md-end gap-3">
-            <a href="#" class="text-white-50 text-decoration-none">Privacy</a>
-            <a href="#" class="text-white-50 text-decoration-none">Terms</a>
-            <a href="#" class="text-white-50 text-decoration-none">Sitemap</a>
+            <a href="#" class="text-white-50 text-decoration-none">Privacy Policy</a>
+            <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+            <a href="#" class="text-white-50 text-decoration-none">Cookie Policy</a>
           </div>
         </div>
       </div>
@@ -878,7 +889,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Visitor Counter Functionality
+function updateVisitCount() {
+  // Get current count from localStorage
+  let count = localStorage.getItem('visitCount') || 0;
+  count = parseInt(count) + 1;
+  
+  // Save updated count
+  localStorage.setItem('visitCount', count);
+  
+  // Update display with animation
+  const visitCountElement = document.getElementById('visitCount');
+  if (visitCountElement) {
+    visitCountElement.style.opacity = '0';
+    visitCountElement.style.transform = 'translateY(10px)';
+    
+    setTimeout(() => {
+      visitCountElement.textContent = count.toLocaleString();
+      visitCountElement.style.opacity = '1';
+      visitCountElement.style.transform = 'translateY(0)';
+    }, 200);
+  }
+}
+
+// Initialize visit count on page load
+document.addEventListener('DOMContentLoaded', () => {
+  updateVisitCount();
+  
+  // Add animation styles
+  const style = document.createElement('style');
+  style.textContent = `
+    #visitCount {
+      transition: all 0.3s ease;
+    }
+  `;
+  document.head.appendChild(style);
+});
 </script>
+
 
 <!-- Add Cart Modal -->
 <div class="modal fade" id="cartModal" tabindex="-1">
@@ -1770,6 +1819,13 @@ document.addEventListener('DOMContentLoaded', () => {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   margin-bottom: 3rem;
+  backdrop-filter: blur(10px);
+}
+
+.newsletter-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .newsletter-form .form-control {
@@ -1778,6 +1834,13 @@ document.addEventListener('DOMContentLoaded', () => {
   color: #fff;
   padding: 0.8rem 1.2rem;
   border-radius: 8px 0 0 8px;
+  transition: all 0.3s ease;
+}
+
+.newsletter-form .form-control:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: none;
 }
 
 .newsletter-form .form-control::placeholder {
@@ -1788,6 +1851,29 @@ document.addEventListener('DOMContentLoaded', () => {
   padding: 0.8rem 1.5rem;
   border-radius: 0 8px 8px 0;
   font-weight: 500;
+  background: linear-gradient(135deg, #007bff, #00d2ff);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.newsletter-form .btn-brand:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.footer-heading {
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-heading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #007bff, #00d2ff);
 }
 
 .social-icon {
@@ -1803,9 +1889,10 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .social-icon:hover {
-  background: #007bff;
+  background: linear-gradient(135deg, #007bff, #00d2ff);
   color: #fff;
   transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
 }
 
 .footer-links li {
@@ -1816,7 +1903,9 @@ document.addEventListener('DOMContentLoaded', () => {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   transition: all 0.3s ease;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .footer-links a:hover {
@@ -1825,22 +1914,68 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .footer-links i {
+  font-size: 0.8rem;
   color: #007bff;
-  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.footer-links a:hover i {
+  transform: translateX(3px);
+}
+
+.contact-info .contact-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  color: #007bff;
+}
+
+.contact-info .contact-details {
+  flex: 1;
+}
+
+.contact-info .contact-details a {
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contact-info .contact-details a:hover {
+  color: #007bff;
 }
 
 .footer-bottom {
   position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.footer-bottom::before {
+.footer-bottom a {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.footer-bottom a:hover {
+  color: #fff !important;
+}
+
+.footer-bottom a::after {
   content: '';
   position: absolute;
-  top: 0;
   left: 0;
-  right: 0;
+  bottom: -2px;
+  width: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: #007bff;
+  transition: width 0.3s ease;
+}
+
+.footer-bottom a:hover::after {
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -1859,6 +1994,43 @@ document.addEventListener('DOMContentLoaded', () => {
   
   .footer-links {
     margin-bottom: 2rem;
+  }
+  
+  .contact-info {
+    margin-bottom: 2rem;
+  }
+}
+
+/* Visitor Counter Styles */
+.visitor-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.visitor-counter:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.visitor-counter i {
+  color: #007bff;
+}
+
+#visitCount {
+  font-weight: 600;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .visitor-counter {
+    margin-top: 1rem;
   }
 }
 </style>
