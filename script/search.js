@@ -1,7 +1,15 @@
 // Search functionality
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Search functionality initializing...');
+    
     const searchForm = document.getElementById('navbar-search-form');
     const searchInput = document.getElementById('search-input');
+    
+    if (!searchForm || !searchInput) {
+        console.error('Search form elements not found!');
+        return;
+    }
+    
     let searchTimeout;
 
     // Create search results dropdown
@@ -12,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle search input
     searchInput.addEventListener('input', function() {
+        console.log('Search input changed:', this.value);
         clearTimeout(searchTimeout);
         const query = this.value.trim();
 
@@ -26,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Debounce search
         searchTimeout = setTimeout(() => {
+            console.log('Executing search for:', query);
             searchCourses(query);
         }, 300);
     });
@@ -35,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const query = searchInput.value.trim();
         if (query) {
+            console.log('Form submitted with query:', query);
             window.location.href = `?content=Courses&search=${encodeURIComponent(query)}`;
         }
     });
@@ -45,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
             searchResults.style.display = 'none';
         }
     });
+
+    console.log('Search functionality initialized successfully');
 
     // Initialize cart
     loadCart();
@@ -148,22 +161,41 @@ async function removeFromCart(courseId) {
 
 // Search courses function
 async function searchCourses(query) {
+    console.log('Searching courses with query:', query);
     try {
-        const response = await fetch(`data/search_courses.php?q=${encodeURIComponent(query)}`);
+        const url = `data/search_courses.php?q=${encodeURIComponent(query)}`;
+        console.log('Fetching from URL:', url);
+        
+        const response = await fetch(url);
+        console.log('Search response status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
+        console.log('Search response data:', data);
 
         const searchResults = document.querySelector('.search-results-dropdown');
+        if (!searchResults) {
+            console.error('Search results container not found!');
+            return;
+        }
         
         if (!data.success) {
+            console.error('Search failed:', data.error);
             searchResults.innerHTML = '<div class="no-results"><i class="fas fa-exclamation-circle"></i><p>Error searching courses</p></div>';
             return;
         }
 
         if (data.courses.length === 0) {
+            console.log('No courses found');
             searchResults.innerHTML = '<div class="no-results"><i class="fas fa-search"></i><p>No courses found</p></div>';
             return;
         }
 
+        console.log('Found courses:', data.courses.length);
+        
         // Display search results with highlighted matching text
         searchResults.innerHTML = `
             <div class="search-results-content">
@@ -189,9 +221,16 @@ async function searchCourses(query) {
             </div>
         `;
     } catch (error) {
-        console.error('Error searching courses:', error);
+        console.error('Error in searchCourses:', error);
         const searchResults = document.querySelector('.search-results-dropdown');
-        searchResults.innerHTML = '<div class="no-results"><i class="fas fa-exclamation-circle"></i><p>Error searching courses</p></div>';
+        if (searchResults) {
+            searchResults.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>Error searching courses: ${error.message}</p>
+                </div>
+            `;
+        }
     }
 }
 
